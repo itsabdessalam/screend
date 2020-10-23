@@ -8,6 +8,17 @@
   </div>
 </template>
 
+<script>
+// import MovieService from '@/services/MovieService'
+export default {
+  created() {
+    // MovieService.getMovieSearchList('ava').then(response => {
+    //   console.log(response)
+    // })
+  }
+}
+</script>
+
 <style lang="scss">
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
