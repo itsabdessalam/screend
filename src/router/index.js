@@ -6,20 +6,43 @@ Vue.use(VueRouter);
 const routes = [
   {
     path: "/",
-    name: "Home",
-    component: () => import(/* webpackChunkName: "home" */ "@/pages/Home.vue")
+    name: "home",
+    component: () => import(/* webpackChunkName: "home" */ "@/pages/Home.vue"),
+    meta: {
+      title: "Homepage - Screend"
+    }
   },
   {
-    path: "/about",
-    name: "About",
-    component: () => import(/* webpackChunkName: "about" */ "@/pages/About.vue")
-  }
+    path: "/movies",
+    name: "movies",
+    component: () =>
+      import(/* webpackChunkName: "movies" */ "@/pages/Movies.vue"),
+    meta: {
+      title: "Movies - Screend"
+    }
+  },
+  {
+    path: "/movies/:id",
+    name: "movie-details",
+    component: () =>
+      import(/* webpackChunkName: "movieDetails" */ "@/pages/Movie.vue"),
+    meta: {
+      title: "Movie Details - Screend"
+    }
+  },
+  // redirect if no route matches to dashboard
+  { path: "*", redirect: "/" }
 ];
 
 const router = new VueRouter({
   mode: "history",
   base: process.env.BASE_URL,
   routes
+});
+
+router.beforeEach((to, from, next) => {
+  document.title = to.meta.title || "Screend";
+  next();
 });
 
 export default router;

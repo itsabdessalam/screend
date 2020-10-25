@@ -1,9 +1,15 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
+  <Layout>
     <router-view />
-  </div>
+  </Layout>
 </template>
+
+<script>
+import Layout from "@/components/layout/Default";
+
+export default {
+  components: {
+    Layout
+  }
+};
+</script>

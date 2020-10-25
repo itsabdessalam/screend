@@ -1,5 +1,7 @@
 <template>
-  <footer></footer>
+  <div>
+    <h2>Movies</h2>
+  </div>
 </template>
 
 <script>
