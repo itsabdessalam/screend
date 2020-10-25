@@ -20,7 +20,7 @@
               <button
                 id="show-modal"
                 class="billboard__action billboard__action--trailer"
-                @click="showModal = true"
+                @click="toggleModal"
               >
                 Watch trailer
               </button>
