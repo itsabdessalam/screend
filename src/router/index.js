@@ -1,30 +1,49 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Home from "../views/Home.vue";
 
 Vue.use(VueRouter);
 
 const routes = [
   {
     path: "/",
-    name: "Home",
-    component: Home
+    name: "home",
+    component: () => import(/* webpackChunkName: "home" */ "@/pages/Home.vue"),
+    meta: {
+      title: "Homepage - Screend"
+    }
   },
   {
-    path: "/about",
-    name: "About",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
+    path: "/movies",
+    name: "movies",
     component: () =>
-      import(/* webpackChunkName: "about" */ "../views/About.vue")
-  }
+      import(/* webpackChunkName: "movies" */ "@/pages/Movies.vue"),
+    meta: {
+      title: "Movies - Screend"
+    }
+  },
+  {
+    path: "/movies/:id",
+    name: "movie-details",
+    component: () =>
+      import(/* webpackChunkName: "movieDetails" */ "@/pages/Movie.vue"),
+    meta: {
+      title: "Movie Details - Screend"
+    }
+  },
+  // redirect if no route matches to homepage
+  { path: "*", redirect: "/" }
 ];
 
 const router = new VueRouter({
   mode: "history",
   base: process.env.BASE_URL,
   routes
+});
+
+router.beforeEach((to, from, next) => {
+  document.title = to.meta.title || "Screend";
+  // add guards here if necessary
+  next();
 });
 
 export default router;

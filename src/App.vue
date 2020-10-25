@@ -1,43 +1,15 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
+  <Layout>
     <router-view />
-  </div>
+  </Layout>
 </template>
 
 <script>
-// import MovieService from '@/services/MovieService'
+import Layout from "@/components/layout/Default";
+
 export default {
-  created() {
-    // MovieService.getMovieSearchList('ava').then(response => {
-    //   console.log(response)
-    // })
+  components: {
+    Layout
   }
-}
+};
 </script>
-
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
-}
-</style>

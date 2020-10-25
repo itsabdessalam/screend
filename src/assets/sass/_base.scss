@@ -1,0 +1,91 @@
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  font-family: $contentFont;
+  line-height: 1.45;
+  letter-spacing: -0.2px;
+  background-color: $background;
+  color: $text;
+  text-align: left;
+  min-height: 100vh;
+  overflow-x: hidden;
+
+  &.overflow {
+    overflow: hidden !important;
+  }
+}
+
+input,
+select,
+textarea,
+button {
+  font-family: $contentFont;
+}
+
+p {
+  display: block;
+  margin-bottom: 12px;
+}
+
+button {
+  line-height: 1.45;
+}
+
+img {
+  max-width: 100%;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+span {
+  display: block;
+}
+
+[hidden],
+.hidden {
+  display: none;
+  visibility: hidden;
+  overflow: hidden;
+  height: 0;
+  width: 0;
+}
+
+button:disabled,
+button[disabled] {
+  cursor: not-allowed !important;
+  opacity: 0.6 !important;
+}
+
+.screen-only {
+  position: absolute;
+  top: -100000px;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+@media (min-width: 1025px) {
+  #device:after {
+    content: "desktop";
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  #device:after {
+    content: "tablet";
+  }
+}
+
+@media (max-width: 767px) {
+  #device:after {
+    content: "mobile";
+  }
+}
