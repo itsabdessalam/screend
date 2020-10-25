@@ -30,7 +30,7 @@ const routes = [
       title: "Movie Details - Screend"
     }
   },
-  // redirect if no route matches to dashboard
+  // redirect if no route matches to homepage
   { path: "*", redirect: "/" }
 ];
 
