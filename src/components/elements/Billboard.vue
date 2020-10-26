@@ -116,8 +116,8 @@ export default {
   .billboard__inner,
   .billboard__meta,
   .billboard__backdrop,
-  .billboard__backdrop .img__lazyload__wrapper,
-  .billboard__backdrop .img__lazyload__wrapper > img {
+  .billboard__backdrop .image__wrapper,
+  .billboard__backdrop .image__wrapper > img {
     width: 100%;
     height: 100%;
   }
