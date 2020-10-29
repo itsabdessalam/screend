@@ -3,10 +3,10 @@
     <section class="hero">
       <Billboard :movie="movies[0]" />
     </section>
+    <section class="my-list"></section>
     <section class="trending-now"></section>
     <section class="most-watched"></section>
     <section class="upcoming"></section>
-    <section class="my-list"></section>
   </div>
   <div v-else>
     Loading...
