@@ -4,7 +4,7 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 
-import Img from "@/components/elements/Img.vue";
+import { Img } from "@/components/elements";
 
 import "@/assets/fonts/index.scss";
 import "@/assets/sass/globals.scss";

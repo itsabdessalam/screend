@@ -44,8 +44,8 @@
 </template>
 
 <script>
-import Modal from "@/components/elements/Modal";
-import Player from "@/components/elements/Player";
+import Modal from "./Modal";
+import Player from "./Player";
 
 export default {
   name: "Billboard",

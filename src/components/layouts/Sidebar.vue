@@ -1,9 +1,11 @@
 <template>
-  <footer></footer>
+  <div></div>
 </template>
 
 <script>
-export default {};
+export default {
+  name: "Sidebar"
+};
 </script>
 
 <style lang="scss" scoped></style>

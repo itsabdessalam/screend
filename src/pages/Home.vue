@@ -3,10 +3,18 @@
     <section class="hero">
       <Billboard :movie="movies[0]" />
     </section>
-    <section class="my-list"></section>
-    <section class="trending-now"></section>
-    <section class="most-watched"></section>
-    <section class="upcoming"></section>
+    <section class="my-list">
+      <Slider></Slider>
+    </section>
+    <section class="trending-now">
+      <Slider></Slider>
+    </section>
+    <section class="most-watched">
+      <Slider></Slider>
+    </section>
+    <section class="upcoming">
+      <Slider></Slider>
+    </section>
   </div>
   <div v-else>
     Loading...
@@ -14,7 +22,7 @@
 </template>
 
 <script>
-import Billboard from "@/components/elements/Billboard";
+import { Billboard, Slider } from "@/components/elements";
 
 // temporary data mock
 import moviesData from "@/mock/movies.json";
@@ -22,7 +30,8 @@ import moviesData from "@/mock/movies.json";
 export default {
   name: "Home",
   components: {
-    Billboard
+    Billboard,
+    Slider
   },
   data() {
     return {

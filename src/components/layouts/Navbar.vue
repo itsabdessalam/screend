@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import Logo from "@/components/elements/Logo";
+import { Logo } from "@/components/elements";
 
 export default {
   name: "Navbar",
