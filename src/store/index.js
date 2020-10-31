@@ -1,9 +1,9 @@
 import auth from "@/store/modules/auth";
-import wishlist from "@/store/modules/wishlist";
+import watchlist from "@/store/modules/watchlist";
 
 export default {
   modules: {
     auth,
-    wishlist
+    watchlist
   }
 };
