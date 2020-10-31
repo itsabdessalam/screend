@@ -30,6 +30,15 @@ const routes = [
       title: "Movie Details - Screend"
     }
   },
+  {
+    path: "/watchlist",
+    name: "watchlist",
+    component: () =>
+      import(/* webpackChunkName: "watchlist" */ "@/pages/Watchlist.vue"),
+    meta: {
+      title: "Watchlist - Screend"
+    }
+  },
   // redirect if no route matches to homepage
   { path: "*", redirect: "/" }
 ];

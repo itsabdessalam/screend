@@ -1,9 +1,14 @@
+import Vue from "vue";
+import Vuex from "vuex";
 import auth from "@/store/modules/auth";
-import wishlist from "@/store/modules/wishlist";
+import watchlist from "@/store/modules/watchlist";
 
-export default {
+// This will allow us to use som vuex features like mapGetters
+Vue.use(Vuex);
+
+export default new Vuex.Store({
   modules: {
     auth,
-    wishlist
+    watchlist
   }
-};
+});
