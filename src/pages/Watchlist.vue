@@ -8,13 +8,15 @@
     <div v-else>
       <button @click="logout">Log out</button>
       <div v-for="movie in watchlist" :key="movie.id">
-        <img
-          :src="getPosterImageSource(movie.poster_path)"
-          alt=""
-          width="auto"
-          height="300"
-        />
-        <p>{{ movie.title }}</p>
+        <a href="" @click.prevent="goToMovieDetails(movie.id)">
+          <img
+            :src="getPosterImageSource(movie.poster_path)"
+            alt=""
+            width="auto"
+            height="300"
+          />
+          <p>{{ movie.title }}</p>
+        </a>
       </div>
     </div>
   </div>
@@ -27,10 +29,11 @@ import WatchlistService from "@/services/WatchlistService";
 import { mapGetters } from "vuex";
 
 import ImageMixin from "@/mixins/ImageMixin";
+import MovieMixin from "@/mixins/MovieMixin";
 
 export default {
   name: "Watchlist",
-  mixins: [ImageMixin],
+  mixins: [ImageMixin, MovieMixin],
   data() {
     return {
       watchlist: []
