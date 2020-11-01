@@ -62,7 +62,7 @@ export default {
 .layout {
   margin: 0 auto;
   .content {
-    min-height: calc(100vh - 280px);
+    min-height: calc(100vh - 300px);
   }
 }
 </style>

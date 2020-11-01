@@ -28,7 +28,7 @@ export default {
         list = list.concat(result.results);
         page++;
       }
-      return { list, totalPage: page - 1 };
+      return list;
     } catch (error) {
       return null;
     }
@@ -51,33 +51,17 @@ export default {
     }
   },
   /**
-   * Get the reviews of a movie
-   *
-   * @COMMENTS Can be useful to display all the reviews of a movie
-   * Currently I'm doing a loop to get them all at once but we could also add a pagination in the reviews section and
-   * fetch the paginated list on each page? I'll update it when we will have decide on what we want to do
+   * Get the paginated reviews of a movie
    *
    * @param {String/Number} movieId - both stringify number or actual number can be passed
-   * @returns {Promise<Object>} { list: Array, page: Number }
+   * @returns {Promise<Array>}
    */
-  async getMovieReviews(movieId) {
+  async getMovieReviews(movieId, page = 1) {
     try {
-      let page = 1;
-      let list = [];
-      let hasMoreResults = true;
-      while (page <= MAX_REQUESTS_NUMBER && hasMoreResults) {
-        const result = await request({
-          url: `${BASE_API_URL_V3}/movie/${movieId}/reviews?api_key=${process.env.VUE_APP_API_KEY}&page=${page}`
-        });
-
-        if (!result.results) {
-          hasMoreResults = false;
-          break;
-        }
-        list = list.concat(result.results);
-        page++;
-      }
-      return { list, totalPage: page - 1 };
+      const result = await request({
+        url: `${BASE_API_URL_V3}/movie/${movieId}/reviews?api_key=${process.env.VUE_APP_API_KEY}&page=${page}`
+      });
+      return result.results;
     } catch (error) {
       return null;
     }
@@ -130,22 +114,62 @@ export default {
    *
    * @COMMENTS We could use sort_by = 'release_date.desc' to get the new movies instead of popular ones
    *
-   * @param {Number} page
    * @param {String} sort_by - look at the API available list (https://developers.themoviedb.org/3/discover/movie-discover)
    * @param {String} region - two-letter code like US, FR, DE, IT...
+   * @param {Number} selectedYear - release year
+   * @param {Array<Object>} selectedGenres - list of genres { id, name }
+   * @param {Boolean} includeUpcoming - include upcoming movies or not
    * @returns {Promise<Object>} { page, results, total_pages, total_results }
    */
-  async getMoviesDiscoveryList(
-    page = 1,
+  async getMoviesDiscoveryList({
     sort_by = "popularity.desc",
-    region = "US"
-  ) {
+    region = "US",
+    selectedYear = null,
+    selectedGenres = [],
+    includeUpcoming = false
+  }) {
     try {
-      // Format the current date like: 2020-10-24
-      const dateLimit = new Date().toISOString().slice(0, 10);
-      return await request({
-        url: `${BASE_API_URL_V3}/discover/movie?api_key=${process.env.VUE_APP_API_KEY}&page=${page}&sort_by=${sort_by}&region=${region}&release_date.lte=${dateLimit}`
-      });
+      let page = 1;
+      let query = `?api_key=${process.env.VUE_APP_API_KEY}&sort_by=${sort_by}&region=${region}`;
+
+      /**
+       * If no specific year mentionned and if upcoming movies should not be included,
+       * get the movies already released only
+       */
+      if (!selectedYear && !includeUpcoming) {
+        // Format the current date like: 2020-10-24
+        const dateLimit = new Date().toISOString().slice(0, 10);
+        query += `&release_date.lte=${dateLimit}`;
+      }
+
+      if (selectedYear) {
+        query += `&primary_release_year=${selectedYear}`;
+      }
+
+      if (selectedGenres && selectedGenres.length) {
+        // We should only pass the genres ids in the query such as: '54,254,89'
+        query += `&with_genres=${selectedGenres
+          .map(item => item.id)
+          .join(",")}`;
+      }
+
+      let list = [];
+      let hasMoreResults = true;
+      // Get the maximum of results
+      while (page <= MAX_REQUESTS_NUMBER && hasMoreResults) {
+        const result = await request({
+          url: `${BASE_API_URL_V3}/discover/movie${query}&page=${page}`
+        });
+
+        if (!result.results) {
+          hasMoreResults = false;
+          break;
+        }
+        list = list.concat(result.results);
+        page++;
+      }
+
+      return list;
     } catch (error) {
       return null;
     }
@@ -171,13 +195,14 @@ export default {
    *
    * @COMMENTS Could also be useful for our filters but also to display the main genres in a category or something like that
    *
-   * @returns {Promise<Object>} { genres }
+   * @returns {Promise<Array>}
    */
   async getGenresList() {
     try {
-      return await request({
+      const result = await request({
         url: `${BASE_API_URL_V3}/genre/movie/list?api_key=${process.env.VUE_APP_API_KEY}`
       });
+      return result.genres || [];
     } catch (error) {
       return null;
     }

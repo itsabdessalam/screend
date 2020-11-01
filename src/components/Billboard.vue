@@ -6,8 +6,22 @@
           <h2 class="billboard__title">
             {{ movie.title || movie.original_title }}
           </h2>
+          <div class="billboard__subtitle">
+            <div class="billboard__rate">
+              <IMDbIcon />
+              <span>{{ movie.vote_average }}</span>
+            </div>
+            <span class="billboard__reviews">
+              {{ movie.vote_count }} Reviews</span
+            >
+            <span class="dot">•</span>
+            <span class="billboard__release">
+              {{ movie.release_date | year }}
+            </span>
+          </div>
+
           <p class="billboard__overview">
-            {{ movie.overview | truncate(250) }}
+            {{ movie.overview | truncate(200) }}
           </p>
           <div class="billboard__actions">
             <router-link
@@ -20,11 +34,11 @@
               <button
                 id="show-modal"
                 class="billboard__action billboard__action--trailer"
-                @click="toggleModal"
+                @click="openModal"
               >
                 Watch trailer
               </button>
-              <Modal v-if="showModal" @close="toggleModal">
+              <Modal v-if="showModal" @close="closeModal">
                 <template #body>
                   <Player :id="video.id" />
                 </template>
@@ -40,12 +54,14 @@
         />
       </div>
     </div>
+    <div class="billboard__overlay"></div>
   </div>
 </template>
 
 <script>
 import Modal from "./Modal";
 import Player from "./Player";
+import { IMDb as IMDbIcon } from "@/icons";
 
 export default {
   name: "Billboard",
@@ -57,7 +73,8 @@ export default {
   },
   components: {
     Modal,
-    Player
+    Player,
+    IMDbIcon
   },
   data() {
     return {
@@ -92,16 +109,19 @@ export default {
   methods: {
     onEscape(event) {
       if (event.keyCode === 27) {
-        this.toggleModal();
+        this.closeModal();
       }
     },
     onClickOutside(event) {
       if (event.target.classList.contains("modal__backdrop")) {
-        this.toggleModal();
+        this.closeModal();
       }
     },
-    toggleModal() {
-      this.showModal = !this.showModal;
+    openModal() {
+      this.showModal = true;
+    },
+    closeModal() {
+      this.showModal = false;
     }
   }
 };
@@ -110,8 +130,14 @@ export default {
 <style lang="scss" scoped>
 .billboard {
   position: relative;
-  height: 90vh;
-  margin-top: -80px;
+  height: 100vh;
+  margin-top: -100px;
+  background-image: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 1) 0%,
+    rgba(0, 0, 0, 1) 50%,
+    rgba(0, 0, 0, 0.2) 100%
+  );
 
   .billboard__inner,
   .billboard__meta,
@@ -126,10 +152,45 @@ export default {
     display: flex;
     align-items: center;
     padding: 0 60px;
-    background-color: #000000;
+    z-index: 1070;
 
     .billboard__title {
       font-size: 56px;
+      margin-bottom: 12px;
+    }
+
+    .billboard__subtitle {
+      display: flex;
+      align-items: center;
+      margin-bottom: 24px;
+
+      .billboard__rate {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-radius: 4px;
+        border: 1px solid $primary;
+        color: $primary;
+        font-size: 12px;
+        font-weight: 500;
+        width: 66px;
+        padding: 0 6px 0 0px;
+        line-height: 22px;
+        margin-right: 12px;
+
+        > svg {
+          width: 38px;
+          height: auto;
+        }
+      }
+
+      .billboard__reviews,
+      .billboard__release,
+      .dot {
+        font-size: 14px;
+        color: #ffffff;
+        opacity: 0.7;
+      }
     }
   }
 
@@ -146,7 +207,7 @@ export default {
       &--details {
         background-color: #525253;
         color: #ffffff;
-        margin-right: 14px;
+        margin-right: 12px;
       }
 
       &--trailer {
@@ -173,6 +234,36 @@ export default {
         transparent
       );
     }
+  }
+
+  .billboard__inner {
+    &::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      display: block;
+      background-image: linear-gradient(
+        180deg,
+        rgba(0, 0, 0, 0.2),
+        rgba(0, 0, 0, 0)
+      );
+
+      z-index: 1000;
+    }
+  }
+
+  .billboard__overlay {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: block;
+    background-image: linear-gradient(0, #000 0, transparent 50%, transparent);
+    z-index: 1000;
   }
 }
 </style>

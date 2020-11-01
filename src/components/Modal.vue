@@ -70,7 +70,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1090;
+  z-index: 1200;
 }
 
 .modal {
@@ -86,7 +86,7 @@ export default {
   overflow-y: auto;
   display: flex;
   flex-direction: column;
-  z-index: 1092;
+  z-index: 1200;
 }
 
 .modal__header,

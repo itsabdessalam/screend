@@ -34,7 +34,7 @@ export default {
   position: relative;
   padding-bottom: 56.25%;
   background-color: #000000;
-  z-index: 1100;
+  z-index: 1200;
 
   .player__iframe {
     position: absolute;
@@ -43,7 +43,6 @@ export default {
     width: 100%;
     height: 100%;
     pointer-events: all;
-    z-index: 1100;
   }
 
   .player__placeholder {

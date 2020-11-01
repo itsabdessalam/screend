@@ -5,16 +5,17 @@
     </div>
     <div class="navbar__right">
       <ul class="navbar__links">
+        <router-link class="navbar__link" to="/">Home</router-link>
         <router-link class="navbar__link" to="/movies">Movies</router-link>
         <router-link class="navbar__link" to="/latest">Latest</router-link>
-        <router-link class="navbar__link" to="/my-list">My list</router-link>
+        <router-link class="navbar__link" to="/watchlist">My list</router-link>
       </ul>
     </div>
   </div>
 </template>
 
 <script>
-import { Logo } from "@/components/elements";
+import { Logo } from "@/components";
 
 export default {
   name: "Navbar",
@@ -32,14 +33,15 @@ export default {
   position: relative;
   height: 100%;
   width: 100%;
-  height: 80px;
+  height: 100px;
   padding: 0 60px;
-  z-index: 1072;
+  z-index: 1070;
 
   .navbar__links {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    position: relative;
 
     .navbar__link {
       color: #ffffff;

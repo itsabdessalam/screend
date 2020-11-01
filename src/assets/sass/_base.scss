@@ -1,5 +1,28 @@
 * {
   box-sizing: border-box;
+  scroll-behavior: smooth !important;
+  -webkit-overflow-scrolling: touch;
+}
+
+*,
+::after,
+::before {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+::-webkit-scrollbar {
+  width: 0 !important;
+  height: 0 !important;
+  background: 0 0 !important;
+}
+
+::-moz-selection {
+  background: rgba($primary, 0.3);
+}
+
+::selection {
+  background: rgba($primary, 0.3);
 }
 
 html,
@@ -14,10 +37,8 @@ body {
   text-align: left;
   min-height: 100vh;
   overflow-x: hidden;
-
-  &.overflow {
-    overflow: hidden !important;
-  }
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 input,
@@ -46,13 +67,13 @@ a,
 button {
   border: none;
   text-decoration: none;
-  height: 100%;
   cursor: pointer;
-
+  display: block;
+  outline-color: $primary;
   transition: opacity ease-out 0.2s;
 
   &:hover {
-    opacity: 0.8;
+    opacity: 0.7;
   }
 
   &:focus {
@@ -90,6 +111,10 @@ button[disabled] {
   overflow: hidden;
   clip: rect(0, 0, 0, 0);
   border: 0;
+}
+
+.dot {
+  margin: 0 6px;
 }
 
 @media (min-width: 1025px) {

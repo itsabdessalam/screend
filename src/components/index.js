@@ -8,6 +8,8 @@ import Logo from "./Logo";
 import Modal from "./Modal";
 import Player from "./Player";
 import Slider from "./Slider";
+import MovieItem from "./MovieItem";
+import MovieFilters from "./MovieFilters";
 
 export {
   Billboard,
@@ -19,5 +21,7 @@ export {
   Logo,
   Modal,
   Player,
-  Slider
+  Slider,
+  MovieItem,
+  MovieFilters
 };

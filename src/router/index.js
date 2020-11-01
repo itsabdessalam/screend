@@ -39,6 +39,15 @@ const routes = [
       title: "Watchlist - Screend"
     }
   },
+  {
+    path: "/latest",
+    name: "latest",
+    component: () =>
+      import(/* webpackChunkName: "latest" */ "@/pages/Latest.vue"),
+    meta: {
+      title: "Latest - Screend"
+    }
+  },
   // redirect if no route matches to homepage
   { path: "*", redirect: "/" }
 ];
