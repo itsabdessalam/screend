@@ -1,5 +1,5 @@
 import {
-  BASE_API_URL,
+  BASE_API_URL_V3,
   DEFAULT_API_LOCALE,
   MAX_REQUESTS_NUMBER
 } from "@/config";
@@ -18,7 +18,7 @@ export default {
       let hasMoreResults = true;
       while (page <= MAX_REQUESTS_NUMBER && hasMoreResults) {
         const result = await request({
-          url: `${BASE_API_URL}/search/movie?api_key=${process.env.VUE_APP_API_KEY}&query=${query}&language=${DEFAULT_API_LOCALE}&page=${page}`
+          url: `${BASE_API_URL_V3}/search/movie?api_key=${process.env.VUE_APP_API_KEY}&query=${query}&language=${DEFAULT_API_LOCALE}&page=${page}`
         });
 
         if (!result.results) {
@@ -44,7 +44,7 @@ export default {
   async getMovieDetails(movieId) {
     try {
       return await request({
-        url: `${BASE_API_URL}/movie/${movieId}?api_key=${process.env.VUE_APP_API_KEY}&append_to_response=videos,reviews`
+        url: `${BASE_API_URL_V3}/movie/${movieId}?api_key=${process.env.VUE_APP_API_KEY}&append_to_response=videos,reviews`
       });
     } catch (error) {
       return null;
@@ -67,7 +67,7 @@ export default {
       let hasMoreResults = true;
       while (page <= MAX_REQUESTS_NUMBER && hasMoreResults) {
         const result = await request({
-          url: `${BASE_API_URL}/movie/${movieId}/reviews?api_key=${process.env.VUE_APP_API_KEY}&page=${page}`
+          url: `${BASE_API_URL_V3}/movie/${movieId}/reviews?api_key=${process.env.VUE_APP_API_KEY}&page=${page}`
         });
 
         if (!result.results) {
@@ -90,7 +90,7 @@ export default {
   async getMovieCredits(movieId) {
     try {
       return await request({
-        url: `${BASE_API_URL}/movie/${movieId}/credits?api_key=${process.env.VUE_APP_API_KEY}`
+        url: `${BASE_API_URL_V3}/movie/${movieId}/credits?api_key=${process.env.VUE_APP_API_KEY}`
       });
     } catch (error) {
       return null;
@@ -104,7 +104,7 @@ export default {
   async getTrendingMovies(page = 1) {
     try {
       return await request({
-        url: `${BASE_API_URL}/trending/movie/week?api_key=${process.env.VUE_APP_API_KEY}&page=${page}`
+        url: `${BASE_API_URL_V3}/trending/movie/week?api_key=${process.env.VUE_APP_API_KEY}&page=${page}`
       });
     } catch (error) {
       return null;
@@ -119,7 +119,7 @@ export default {
   async getUpcomingMovies(page = 1, region = "US") {
     try {
       return await request({
-        url: `${BASE_API_URL}/movie/upcoming?api_key=${process.env.VUE_APP_API_KEY}&page=${page}&region=${region}`
+        url: `${BASE_API_URL_V3}/movie/upcoming?api_key=${process.env.VUE_APP_API_KEY}&page=${page}&region=${region}`
       });
     } catch (error) {
       return null;
@@ -144,7 +144,7 @@ export default {
       // Format the current date like: 2020-10-24
       const dateLimit = new Date().toISOString().slice(0, 10);
       return await request({
-        url: `${BASE_API_URL}/discover/movie?api_key=${process.env.VUE_APP_API_KEY}&page=${page}&sort_by=${sort_by}&region=${region}&release_date.lte=${dateLimit}`
+        url: `${BASE_API_URL_V3}/discover/movie?api_key=${process.env.VUE_APP_API_KEY}&page=${page}&sort_by=${sort_by}&region=${region}&release_date.lte=${dateLimit}`
       });
     } catch (error) {
       return null;
@@ -160,7 +160,7 @@ export default {
   async getAvailableCountriesList() {
     try {
       return await request({
-        url: `${BASE_API_URL}/configuration/countries?api_key=${process.env.VUE_APP_API_KEY}`
+        url: `${BASE_API_URL_V3}/configuration/countries?api_key=${process.env.VUE_APP_API_KEY}`
       });
     } catch (error) {
       return null;
@@ -176,7 +176,7 @@ export default {
   async getGenresList() {
     try {
       return await request({
-        url: `${BASE_API_URL}/genre/movie/list?api_key=${process.env.VUE_APP_API_KEY}`
+        url: `${BASE_API_URL_V3}/genre/movie/list?api_key=${process.env.VUE_APP_API_KEY}`
       });
     } catch (error) {
       return null;
