@@ -5,20 +5,18 @@
     <div>
       <h3>{{ movie.title }}</h3>
       <!-- Backdrop -->
-      <img
-        :src="getImageSource(movie.backdrop_path)"
-        alt=""
+      <Img
+        :src="getImageSource(movie.backdrop_path, 'backdrop')"
         width="auto"
         height="300"
-        style="display: block;"
+        :alt="movie.title"
       />
       <!-- Poster -->
-      <img
-        :src="getImageSource(movie.poster_path)"
-        alt=""
+      <Img
+        :src="getImageSource(movie.poster_path, 'poster')"
         width="auto"
         height="300"
-        style="display: block;"
+        :alt="movie.title"
       />
       <p>Release date: {{ movie.release_date }}</p>
       <p>Duration: {{ convertMovieRuntime(movie.runtime) }}</p>
@@ -44,12 +42,11 @@
           :key="member.id"
           style="display: inline-block; padding-bottom:30px;"
         >
-          <img
-            :src="getImageSource(member.profile_path)"
-            alt=""
+          <Img
+            :src="getImageSource(member.profile_path, 'profile')"
             width="auto"
             height="300"
-            style="display: block;"
+            :alt="movie.title"
           />
           <p>
             {{ member.name }}

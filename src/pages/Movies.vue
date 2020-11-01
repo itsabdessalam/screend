@@ -12,11 +12,11 @@
       style="display: inline-block; padding-left: 15px; width: 200px;"
     >
       <a href="" @click.prevent="goToMovieDetails(movie.id)">
-        <img
-          :src="getImageSource(movie.poster_path)"
-          alt=""
-          width="200"
-          height="auto"
+        <Img
+          :src="getImageSource(movie.poster_path, 'poster')"
+          width="auto"
+          height="200"
+          :alt="movie.title"
         />
         <p>{{ movie.title }}</p>
         <p>{{ movie.release_date }}</p>
@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import MovieFilters from "@/components/elements/MovieFilters";
+import { MovieFilters } from "@/components";
 
 import MovieService from "@/services/MovieService";
 

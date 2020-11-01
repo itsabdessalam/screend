@@ -9,11 +9,11 @@
       <button @click="logout">Log out</button>
       <div v-for="movie in watchlist" :key="movie.id">
         <a href="" @click.prevent="goToMovieDetails(movie.id)">
-          <img
-            :src="getImageSource(movie.poster_path)"
-            alt=""
+          <Img
+            :src="getImageSource(movie.poster_path, 'poster')"
             width="auto"
             height="300"
+            :alt="movie.title"
           />
           <p>{{ movie.title }}</p>
         </a>

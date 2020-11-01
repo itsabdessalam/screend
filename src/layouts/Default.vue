@@ -15,8 +15,8 @@
   </div>
 </template>
 <script>
-import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
+import Header from "./Header";
+import Footer from "./Footer";
 
 // import MovieService from "@/services/MovieService"
 
@@ -38,9 +38,10 @@ export default {
   mounted() {
     this.setDevice();
     window.addEventListener("resize", this.setDevice);
-  },
-  beforeDestroy() {
-    window.removeEventListener("resize", this.setDevice);
+
+    this.$once("hook:beforeDestroy", () => {
+      window.removeEventListener("resize", this.setDevice);
+    });
   },
   methods: {
     setDevice() {
@@ -60,10 +61,8 @@ export default {
 <style lang="scss">
 .layout {
   margin: 0 auto;
-  padding: 0 36px;
   .content {
-    min-height: calc(100vh - 280px);
-    padding: 72px 0;
+    min-height: calc(100vh - 300px);
   }
 }
 </style>

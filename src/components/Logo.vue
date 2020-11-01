@@ -5,13 +5,18 @@
 </template>
 
 <script>
-export default {};
+export default {
+  name: "Logo"
+};
 </script>
 
 <style lang="scss" scoped>
 .logo {
+  height: 100%;
+  width: 100%;
+
   > img {
-    width: 180px;
+    width: 160px;
     height: auto;
   }
 }
