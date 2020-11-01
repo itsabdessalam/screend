@@ -37,6 +37,30 @@
       </p>
     </div>
     <div>
+      <h4>Cast</h4>
+      <div v-if="cast.length">
+        <div
+          v-for="member in cast"
+          :key="member.id"
+          style="display: inline-block; padding-bottom:30px;"
+        >
+          <img
+            :src="getPosterImageSource(member.profile_path)"
+            alt=""
+            width="auto"
+            height="300"
+            style="display: block;"
+          />
+          <p>
+            {{ member.name }}
+          </p>
+          <p>
+            <i>{{ member.character }}</i>
+          </p>
+        </div>
+      </div>
+    </div>
+    <div>
       <h4>Reviews</h4>
       <div v-if="total_reviews">
         <p>{{ total_reviews }} reviews</p>
@@ -64,6 +88,7 @@ export default {
   mixins: [ImageMixin],
   data() {
     return {
+      cast: [],
       currentReviewPage: 1,
       isLoading: true,
       movie: {},
@@ -85,6 +110,10 @@ export default {
       })
       .catch(error => console.error(error))
       .finally(() => (this.isLoading = false));
+
+    MovieService.getMovieCredits(this.$route.params.id)
+      .then(response => (this.cast = response.cast))
+      .catch(error => console.error(error));
   },
   methods: {
     convertMovieRuntime(runtime) {
@@ -100,9 +129,11 @@ export default {
       MovieService.getMovieReviews(
         this.$route.params.id,
         this.currentReviewPage
-      ).then(response => {
-        this.reviews = this.reviews.concat(response);
-      });
+      )
+        .then(response => {
+          this.reviews = this.reviews.concat(response);
+        })
+        .catch(error => console.error(error));
     }
   }
 };
