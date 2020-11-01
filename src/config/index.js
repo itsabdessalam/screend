@@ -1,7 +1,8 @@
 const config = {
   BASE_API_URL: process.env.VUE_APP_BASE_API_URL,
   DEFAULT_API_LOCALE: "en-US",
-  MAX_REQUESTS_NUMBER: 15
+  MAX_REQUESTS_NUMBER: 15,
+  MIN_MOVIE_YEAR: 1888
 };
 
 /**
