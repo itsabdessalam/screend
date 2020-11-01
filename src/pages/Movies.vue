@@ -31,13 +31,14 @@ import MovieFilters from "@/components/elements/MovieFilters";
 import MovieService from "@/services/MovieService";
 
 import ImageMixin from "@/mixins/ImageMixin";
+import MovieMixin from "@/mixins/MovieMixin";
 
 export default {
   name: "Movies",
   components: {
     MovieFilters
   },
-  mixins: [ImageMixin],
+  mixins: [ImageMixin, MovieMixin],
   data() {
     return {
       isLoading: true,
@@ -59,9 +60,6 @@ export default {
           console.error(error);
         })
         .finally(() => (this.isLoading = false));
-    },
-    goToMovieDetails(movieId) {
-      this.$router.push(`/movies/${movieId}`);
     },
     searchInMoviesList(text) {
       this.isLoading = true;
