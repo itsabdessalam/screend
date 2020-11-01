@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>My watchlist</h1>
+    <h2>My watchlist</h2>
     <div v-if="!isAuthenticated">
       <p>You need to login to access your watchlist.</p>
       <button @click="login">Login</button>
@@ -9,7 +9,7 @@
       <button @click="logout">Log out</button>
       <div v-for="movie in watchlist" :key="movie.id">
         <img
-          :src="`https://image.tmdb.org/t/p/original/${movie.poster_path}`"
+          :src="getPosterImageSource(movie.poster_path)"
           alt=""
           width="auto"
           height="300"
@@ -25,8 +25,12 @@ import AuthService from "@/services/AuthService";
 import WatchlistService from "@/services/WatchlistService";
 
 import { mapGetters } from "vuex";
+
+import ImageMixin from "@/mixins/ImageMixin";
+
 export default {
   name: "Watchlist",
+  mixins: [ImageMixin],
   data() {
     return {
       watchlist: []
