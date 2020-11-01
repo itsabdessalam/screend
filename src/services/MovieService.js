@@ -51,33 +51,17 @@ export default {
     }
   },
   /**
-   * Get the reviews of a movie
-   *
-   * @COMMENTS Can be useful to display all the reviews of a movie
-   * Currently I'm doing a loop to get them all at once but we could also add a pagination in the reviews section and
-   * fetch the paginated list on each page? I'll update it when we will have decide on what we want to do
+   * Get the paginated reviews of a movie
    *
    * @param {String/Number} movieId - both stringify number or actual number can be passed
-   * @returns {Promise<Object>} { list: Array, page: Number }
+   * @returns {Promise<Array>}
    */
-  async getMovieReviews(movieId) {
+  async getMovieReviews(movieId, page = 1) {
     try {
-      let page = 1;
-      let list = [];
-      let hasMoreResults = true;
-      while (page <= MAX_REQUESTS_NUMBER && hasMoreResults) {
-        const result = await request({
-          url: `${BASE_API_URL_V3}/movie/${movieId}/reviews?api_key=${process.env.VUE_APP_API_KEY}&page=${page}`
-        });
-
-        if (!result.results) {
-          hasMoreResults = false;
-          break;
-        }
-        list = list.concat(result.results);
-        page++;
-      }
-      return { list, totalPage: page - 1 };
+      const result = await request({
+        url: `${BASE_API_URL_V3}/movie/${movieId}/reviews?api_key=${process.env.VUE_APP_API_KEY}&page=${page}`
+      });
+      return result.results;
     } catch (error) {
       return null;
     }

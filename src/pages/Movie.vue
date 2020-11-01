@@ -22,7 +22,10 @@
       />
       <p>Release date: {{ movie.release_date }}</p>
       <p>Duration: {{ convertMovieRuntime(movie.runtime) }}</p>
-      <p>Genres: {{ movie.genres.map(genre => genre.name).join(", ") }}</p>
+      <p>
+        Genres:
+        {{ movie.genres && movie.genres.map(genre => genre.name).join(", ") }}
+      </p>
       <p>{{ movie.overview }}</p>
       <p>
         User score:
@@ -35,15 +38,16 @@
     </div>
     <div>
       <h4>Reviews</h4>
-      <div
-        v-if="
-          movie.reviews && movie.reviews.results && movie.reviews.results.length
-        "
-      >
-        <div v-for="review in movie.reviews.results" :key="review.id">
+      <div v-if="total_reviews">
+        <p>{{ total_reviews }} reviews</p>
+        <div v-for="review in reviews" :key="review.id">
           <p>By {{ review.author }}:</p>
           <p>{{ review.content }}</p>
         </div>
+        <!-- We can also go for a classic pagination depending on what UI you imagine for this page -->
+        <button v-if="total_reviews > reviews.length" @click="loadMoreReviews">
+          Load more reviews...
+        </button>
       </div>
       <p v-else>No review yet...</p>
     </div>
@@ -60,8 +64,11 @@ export default {
   mixins: [ImageMixin],
   data() {
     return {
+      currentReviewPage: 1,
       isLoading: true,
-      movie: {}
+      movie: {},
+      reviews: [],
+      total_reviews: 0
     };
   },
   created() {
@@ -71,6 +78,10 @@ export default {
     MovieService.getMovieDetails(this.$route.params.id)
       .then(response => {
         this.movie = response;
+        if (this.movie.reviews) {
+          this.reviews = this.movie.reviews.results || [];
+          this.total_reviews = this.movie.reviews.total_results || 0;
+        }
       })
       .catch(error => console.error(error))
       .finally(() => (this.isLoading = false));
@@ -83,6 +94,15 @@ export default {
     },
     goBack() {
       this.$router.push("/movies");
+    },
+    loadMoreReviews() {
+      this.currentReviewPage++;
+      MovieService.getMovieReviews(
+        this.$route.params.id,
+        this.currentReviewPage
+      ).then(response => {
+        this.reviews = this.reviews.concat(response);
+      });
     }
   }
 };
