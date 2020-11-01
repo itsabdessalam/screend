@@ -6,7 +6,6 @@ export default {
     getImageSource(movieImgPath, type) {
       let size = config.IMAGES_SIZES[type] || config.IMAGES_SIZES["default"];
 
-      console.log("toto", movieImgPath);
       if (movieImgPath) {
         return `${config.BASE_IMAGE_URL}/${size}/${movieImgPath}`;
       }
