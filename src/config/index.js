@@ -1,5 +1,6 @@
 const config = {
   BASE_API_URL: process.env.VUE_APP_BASE_API_URL,
+  BASE_IMAGE_URL: "https://image.tmdb.org/t/p/original",
   DEFAULT_API_LOCALE: "en-US",
   MAX_REQUESTS_NUMBER: 15,
   MIN_MOVIE_YEAR: 1888

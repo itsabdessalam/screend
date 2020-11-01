@@ -7,18 +7,20 @@
       @updateSearchedMovies="searchInMoviesList"
     />
     <div
-      v-for="(movie, index) in movies"
-      :key="index"
+      v-for="movie in movies"
+      :key="movie.id"
       style="display: inline-block; padding-left: 15px; width: 200px;"
     >
-      <img
-        :src="getPosterImageSource(movie)"
-        alt=""
-        width="200"
-        height="auto"
-      />
-      <p>{{ movie.title }}</p>
-      <p>{{ movie.release_date }}</p>
+      <a href="" @click.prevent="goToMovieDetails(movie.id)">
+        <img
+          :src="getPosterImageSource(movie.poster_path)"
+          alt=""
+          width="200"
+          height="auto"
+        />
+        <p>{{ movie.title }}</p>
+        <p>{{ movie.release_date }}</p>
+      </a>
     </div>
   </div>
 </template>
@@ -28,16 +30,16 @@ import MovieFilters from "@/components/elements/MovieFilters";
 
 import MovieService from "@/services/MovieService";
 
-import ScreendPortraitImg from "@/assets/images/screend-portrait.png";
+import ImageMixin from "@/mixins/ImageMixin";
 
 export default {
   name: "Movies",
   components: {
     MovieFilters
   },
+  mixins: [ImageMixin],
   data() {
     return {
-      defaultMoviePoster: ScreendPortraitImg,
       isLoading: true,
       genres: [],
       movies: []
@@ -58,12 +60,8 @@ export default {
         })
         .finally(() => (this.isLoading = false));
     },
-    getPosterImageSource(movie) {
-      if (movie.poster_path) {
-        return `https://image.tmdb.org/t/p/original/${movie.poster_path}`;
-      }
-      // Set a default poster image if the movie does not have its own
-      return this.defaultMoviePoster;
+    goToMovieDetails(movieId) {
+      this.$router.push(`/movies/${movieId}`);
     },
     searchInMoviesList(text) {
       this.isLoading = true;
