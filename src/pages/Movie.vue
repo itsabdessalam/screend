@@ -92,9 +92,15 @@ export default {
       currentReviewPage: 1,
       isLoading: true,
       movie: {},
+      prevRoute: null,
       reviews: [],
       total_reviews: 0
     };
+  },
+  beforeRouteEnter(to, from, next) {
+    next(vm => {
+      vm.prevRoute = from;
+    });
   },
   created() {
     if (!this.$route.params.id) {
@@ -122,7 +128,11 @@ export default {
       return hours + "h" + minutes;
     },
     goBack() {
-      this.$router.push("/movies");
+      if (this.prevRoute.name !== "watchlist") {
+        this.$router.push("/movies");
+        return;
+      }
+      this.$router.push("/watchlist");
     },
     loadMoreReviews() {
       this.currentReviewPage++;
