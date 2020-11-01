@@ -3,7 +3,7 @@ import ScreendPortraitImg from "@/assets/images/screend-portrait.png";
 
 export default {
   methods: {
-    getPosterImageSource(movieImgPath) {
+    getImageSource(movieImgPath) {
       if (movieImgPath) {
         return `${config.BASE_IMAGE_URL}/${movieImgPath}`;
       }

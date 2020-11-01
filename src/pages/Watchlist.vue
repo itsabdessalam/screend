@@ -10,7 +10,7 @@
       <div v-for="movie in watchlist" :key="movie.id">
         <a href="" @click.prevent="goToMovieDetails(movie.id)">
           <img
-            :src="getPosterImageSource(movie.poster_path)"
+            :src="getImageSource(movie.poster_path)"
             alt=""
             width="auto"
             height="300"
