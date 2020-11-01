@@ -4,7 +4,7 @@
       type="checkbox"
       id="checkbox"
       v-model="filters.includeUpcoming"
-      :disabled="searchedText.length"
+      :disabled="!!searchedText.length"
     />
     <label for="checkbox">include incoming movies</label>
 
@@ -14,7 +14,7 @@
         v-model="filters.selectedYear"
         :options="years"
         placeholder="Select..."
-        :disabled="searchedText.length"
+        :disabled="!!searchedText.length"
       ></multiselect>
     </div>
     <div style="display: inline-block; padding-left: 15px;">
@@ -27,7 +27,7 @@
         placeholder="Select..."
         label="name"
         track-by="name"
-        :disabled="searchedText.length"
+        :disabled="!!searchedText.length"
       ></multiselect>
     </div>
     <div style="display: inline-block; padding-left: 15px;">
