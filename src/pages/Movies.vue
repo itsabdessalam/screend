@@ -13,7 +13,7 @@
     >
       <a href="" @click.prevent="goToMovieDetails(movie.id)">
         <img
-          :src="getPosterImageSource(movie.poster_path)"
+          :src="getImageSource(movie.poster_path)"
           alt=""
           width="200"
           height="auto"

@@ -6,7 +6,7 @@
       <h3>{{ movie.title }}</h3>
       <!-- Backdrop -->
       <img
-        :src="getPosterImageSource(movie.backdrop_path)"
+        :src="getImageSource(movie.backdrop_path)"
         alt=""
         width="auto"
         height="300"
@@ -14,7 +14,7 @@
       />
       <!-- Poster -->
       <img
-        :src="getPosterImageSource(movie.poster_path)"
+        :src="getImageSource(movie.poster_path)"
         alt=""
         width="auto"
         height="300"
@@ -45,7 +45,7 @@
           style="display: inline-block; padding-bottom:30px;"
         >
           <img
-            :src="getPosterImageSource(member.profile_path)"
+            :src="getImageSource(member.profile_path)"
             alt=""
             width="auto"
             height="300"
