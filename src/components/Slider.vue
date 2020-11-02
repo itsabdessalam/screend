@@ -167,7 +167,7 @@ export default {
     .slider__item {
       position: relative;
       display: inline-block;
-      width: calc(40vh - 60px);
+      width: calc(80vw - 60px);
       height: auto;
       overflow: auto;
       cursor: pointer;
@@ -175,6 +175,10 @@ export default {
 
       &:first-child {
         margin-left: 60px;
+      }
+
+      &:last-child {
+        margin-right: 60px;
       }
 
       &:not(:first-child) {
