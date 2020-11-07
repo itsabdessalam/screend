@@ -1,5 +1,8 @@
 <template>
   <div>
+    <button v-if="areFiltersUpdated" @click="resetFilters">
+      Reset filters
+    </button>
     <input
       type="checkbox"
       id="checkbox"
@@ -87,6 +90,20 @@ export default {
   },
   computed: {
     ...mapGetters(["filters", "searchedText"]),
+    areFiltersUpdated() {
+      if (this.mutableSearchedText.length) {
+        return true;
+      }
+      for (const key of Object.keys(this.mutableFilters)) {
+        if (
+          JSON.stringify(this.mutableFilters[key]) !==
+          JSON.stringify(config.DEFAULT_FILTERS[key])
+        ) {
+          return true;
+        }
+      }
+      return false;
+    },
     years() {
       const maxYear = new Date().getFullYear() + 11;
       return Array.from(
@@ -96,8 +113,7 @@ export default {
     }
   },
   created() {
-    this.mutableSearchedText = this.searchedText;
-    this.mutableFilters = JSON.parse(JSON.stringify(this.filters));
+    this.initFromStore();
   },
   watch: {
     mutableFilters: {
@@ -132,6 +148,14 @@ export default {
           this.$emit("updateSearchedMovies", text);
         }
       }, 1000);
+    },
+    initFromStore() {
+      this.mutableSearchedText = this.searchedText;
+      this.mutableFilters = JSON.parse(JSON.stringify(this.filters));
+    },
+    resetFilters() {
+      this.$store.commit("RESET_FILTERS");
+      this.initFromStore();
     }
   }
 };
