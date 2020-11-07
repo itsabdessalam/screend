@@ -21,7 +21,7 @@ export default {
           url: `${BASE_API_URL_V3}/search/movie?api_key=${process.env.VUE_APP_API_KEY}&query=${query}&language=${DEFAULT_API_LOCALE}&page=${page}`
         });
 
-        if (!result.results) {
+        if (!result.results.length) {
           hasMoreResults = false;
           break;
         }
@@ -161,7 +161,7 @@ export default {
           url: `${BASE_API_URL_V3}/discover/movie${query}&page=${page}`
         });
 
-        if (!result.results) {
+        if (!result.results.length) {
           hasMoreResults = false;
           break;
         }
