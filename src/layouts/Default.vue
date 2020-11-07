@@ -61,8 +61,15 @@ export default {
 <style lang="scss">
 .layout {
   margin: 0 auto;
+
   .content {
-    min-height: calc(100vh - 300px);
+    min-height: calc(100vh - 125px);
+  }
+
+  &[data-page="movies"] {
+    .content {
+      padding: 0 60px;
+    }
   }
 }
 </style>
