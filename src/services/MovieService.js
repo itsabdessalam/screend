@@ -1,7 +1,8 @@
 import {
   BASE_API_URL_V3,
   DEFAULT_API_LOCALE,
-  MAX_REQUESTS_NUMBER
+  MAX_REQUESTS_NUMBER,
+  DEFAULT_SORT_BY_FILTER
 } from "@/config";
 import request from "@/utils/request";
 
@@ -112,9 +113,7 @@ export default {
   /**
    * Get the list of movies to discover
    *
-   * @COMMENTS We could use sort_by = 'release_date.desc' to get the new movies instead of popular ones
-   *
-   * @param {String} sort_by - look at the API available list (https://developers.themoviedb.org/3/discover/movie-discover)
+   * @param {String} sortBy - look at the API available list (https://developers.themoviedb.org/3/discover/movie-discover)
    * @param {String} region - two-letter code like US, FR, DE, IT...
    * @param {Number} selectedYear - release year
    * @param {Array<Object>} selectedGenres - list of genres { id, name }
@@ -122,7 +121,7 @@ export default {
    * @returns {Promise<Object>} { page, results, total_pages, total_results }
    */
   async getMoviesDiscoveryList({
-    sort_by = "popularity.desc",
+    sortBy = DEFAULT_SORT_BY_FILTER,
     region = "US",
     selectedYear = null,
     selectedGenres = [],
@@ -130,7 +129,7 @@ export default {
   }) {
     try {
       let page = 1;
-      let query = `?api_key=${process.env.VUE_APP_API_KEY}&sort_by=${sort_by}&region=${region}`;
+      let query = `?api_key=${process.env.VUE_APP_API_KEY}&sort_by=${sortBy.value}&region=${region}&language=en-US`;
 
       /**
        * If no specific year mentionned and if upcoming movies should not be included,
