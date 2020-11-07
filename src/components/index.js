@@ -10,6 +10,7 @@ import Player from "./Player";
 import Slider from "./Slider";
 import MovieItem from "./MovieItem";
 import MovieFilters from "./MovieFilters";
+import MovieSection from "./MovieSection";
 
 export {
   Billboard,
@@ -23,5 +24,6 @@ export {
   Player,
   Slider,
   MovieItem,
-  MovieFilters
+  MovieFilters,
+  MovieSection
 };

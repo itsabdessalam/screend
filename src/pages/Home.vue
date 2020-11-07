@@ -1,11 +1,11 @@
 <template>
-  <div v-if="movies.length">
+  <!-- Display the page if we have the billboard movie at least -->
+  <div v-if="billboardMovie">
     <section class="hero">
-      <!-- Only for display movies[0] -->
-      <Billboard :movie="movies[0]" />
+      <Billboard :movie="billboardMovie" />
     </section>
     <div class="views">
-      <section class="my-list">
+      <section v-if="watchlist && watchlist.length" class="my-list">
         <div class="section__header">
           <h2 class="section__title">My list</h2>
           <div class="section__actions">
@@ -14,9 +14,8 @@
         </div>
         <div class="section__content">
           <Slider>
-            <!-- Only for display, we remove the first item -->
             <MovieItem
-              v-for="movie in movies.slice(1)"
+              v-for="movie in watchlist.slice(0, 20)"
               :key="movie.id"
               :movie="movie"
               type="backdrop"
@@ -24,74 +23,11 @@
           </Slider>
         </div>
       </section>
-      <section class="latest">
-        <div class="section__header">
-          <h2 class="section__title">Latest</h2>
-          <div class="section__actions">
-            <router-link to="/movies">View all</router-link>
-          </div>
-        </div>
-        <div class="section__content">
-          <Slider>
-            <MovieItem
-              v-for="movie in movies.slice(1)"
-              :key="movie.id"
-              :movie="movie"
-            ></MovieItem>
-          </Slider>
-        </div>
-      </section>
-      <section class="most-watched">
-        <div class="section__header">
-          <h2 class="section__title">Most watched</h2>
-          <div class="section__actions">
-            <router-link to="/movies">View all</router-link>
-          </div>
-        </div>
-        <div class="section__content">
-          <Slider>
-            <MovieItem
-              v-for="movie in movies.slice(1)"
-              :key="movie.id"
-              :movie="movie"
-            ></MovieItem>
-          </Slider>
-        </div>
-      </section>
-      <section class="trending-now">
-        <div class="section__header">
-          <h2 class="section__title">Trending now</h2>
-          <div class="section__actions">
-            <router-link to="/movies">View all</router-link>
-          </div>
-        </div>
-        <div class="section__content">
-          <Slider>
-            <MovieItem
-              v-for="movie in movies.slice(1)"
-              :key="movie.id"
-              :movie="movie"
-            ></MovieItem>
-          </Slider>
-        </div>
-      </section>
-      <section class="upcoming">
-        <div class="section__header">
-          <h2 class="section__title">Upcoming</h2>
-          <div class="section__actions">
-            <router-link to="/movies">View all</router-link>
-          </div>
-        </div>
-        <div class="section__content">
-          <Slider>
-            <MovieItem
-              v-for="movie in movies.slice(1)"
-              :key="movie.id"
-              :movie="movie"
-            ></MovieItem>
-          </Slider>
-        </div>
-      </section>
+      <MovieSection
+        v-for="(section, idx) in moviesSections"
+        :key="idx"
+        :section="section"
+      />
     </div>
   </div>
   <div v-else>
@@ -100,27 +36,43 @@
 </template>
 
 <script>
-import { Billboard, Slider, MovieItem } from "@/components";
+import { Billboard, Slider, MovieItem, MovieSection } from "@/components";
+import { mapGetters } from "vuex";
 
-// Temporary data mock only for display
-import moviesData from "@/mock/movies.json";
+import { MOVIES_SECTIONS } from "@/config";
+
+import MovieService from "@/services/MovieService";
 
 export default {
   name: "Home",
   components: {
     Billboard,
     Slider,
-    MovieItem
+    MovieItem,
+    MovieSection
   },
   data() {
     return {
-      movies: moviesData.results || []
+      billboardMovie: null,
+      moviesSections: MOVIES_SECTIONS
     };
+  },
+  computed: {
+    ...mapGetters(["watchlist"])
+  },
+  created() {
+    MovieService.getMovieDetails(8871)
+      .then(response => {
+        this.billboardMovie = response;
+      })
+      .catch(error => {
+        console.error(error);
+      });
   }
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 section {
   .section__header {
     display: flex;
