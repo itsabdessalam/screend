@@ -250,6 +250,7 @@ export default {
   }
 
   .movie__filter--search {
+    margin-left: 0 !important;
     max-width: 300px;
   }
 
@@ -271,7 +272,7 @@ export default {
       opacity: 0.7;
       width: 18px;
       position: absolute;
-      left: 16px;
+      left: 10px;
       top: 14px;
     }
 
