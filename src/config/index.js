@@ -65,4 +65,11 @@ config.IMAGES_SIZES = {
 
 config.DEFAULT_SORT_BY_FILTER = config.SORT_BY_FILTERS.POPULARITY[0];
 
+config.DEFAULT_FILTERS = {
+  includeUpcoming: false,
+  selectedGenres: [],
+  selectedYear: null,
+  sortBy: config.DEFAULT_SORT_BY_FILTER
+};
+
 module.exports = config;
