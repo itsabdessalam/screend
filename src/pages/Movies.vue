@@ -90,7 +90,7 @@ export default {
   .movie__list {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    grid-gap: 8px;
+    grid-gap: 6px;
     margin-top: 32px;
     position: relative;
 

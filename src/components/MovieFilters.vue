@@ -45,6 +45,20 @@
         >
       </div>
       <div class="movie__filter movie__search">
+        <svg
+          class="w-6 h-6"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+          ></path>
+        </svg>
         <input
           type="text"
           id="searchedText"
@@ -184,6 +198,7 @@ export default {
     border: 1px solid #dde2ec;
     color: #15161c;
     padding: 12px;
+    padding-left: 32px;
     border-radius: 4px;
     width: 100%;
     display: block;
@@ -251,12 +266,23 @@ export default {
     max-width: 300px;
     margin-left: 2px !important;
 
+    svg {
+      color: #15161c;
+      opacity: 0.7;
+      width: 18px;
+      position: absolute;
+      left: 16px;
+      top: 14px;
+    }
+
     .movie__filter--reset {
       position: absolute;
       top: -20px;
       right: 0;
       background-color: transparent;
       color: $primary;
+      text-align: right;
+      padding: 0;
     }
   }
 }
