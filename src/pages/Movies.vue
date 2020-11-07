@@ -47,7 +47,6 @@ export default {
     };
   },
   created() {
-    this.getMoviesList({});
     MovieService.getGenresList().then(response => (this.genres = response));
   },
   methods: {

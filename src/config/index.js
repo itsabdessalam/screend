@@ -3,7 +3,49 @@ const config = {
   BASE_IMAGE_URL: "https://image.tmdb.org/t/p",
   DEFAULT_API_LOCALE: "en-US",
   MAX_REQUESTS_NUMBER: 15,
-  MIN_MOVIE_YEAR: 1888
+  MIN_MOVIE_YEAR: 1888,
+  SORT_BY_FILTERS: {
+    POPULARITY: [
+      {
+        value: "popularity.desc",
+        label: "Most popular"
+      },
+      {
+        value: "popularity.asc",
+        label: "Least popular"
+      }
+    ],
+    PRIMARY_RELEASE_DATE: [
+      {
+        value: "primary_release_date.desc",
+        label: "Most recent"
+      },
+      {
+        value: "primary_release_date.asc",
+        label: "Oldest"
+      }
+    ],
+    VOTE_AVERAGE: [
+      {
+        value: "vote_average.desc",
+        label: "Highest rate"
+      },
+      {
+        value: "vote_average.asc",
+        label: "Lowest rate"
+      }
+    ],
+    VOTE_COUNT: [
+      {
+        value: "vote_count.desc",
+        label: "Most ratings"
+      },
+      {
+        value: "vote_count.asc",
+        label: "Least ratings"
+      }
+    ]
+  }
 };
 
 /**
@@ -19,6 +61,15 @@ config.IMAGES_SIZES = {
   poster: "w342",
   profile: "w185",
   default: "orignal"
+};
+
+config.DEFAULT_SORT_BY_FILTER = config.SORT_BY_FILTERS.POPULARITY[0];
+
+config.DEFAULT_FILTERS = {
+  includeUpcoming: false,
+  selectedGenres: [],
+  selectedYear: null,
+  sortBy: config.DEFAULT_SORT_BY_FILTER
 };
 
 module.exports = config;

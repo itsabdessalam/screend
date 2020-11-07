@@ -8,6 +8,11 @@
     <div v-else>
       <button @click="logout">Log out</button>
       <div v-for="movie in watchlist" :key="movie.id">
+        <button
+          @click="removeMovieFromWatchlist(sessionId, accountId, movie.id)"
+        >
+          Remove from watchlist
+        </button>
         <a href="" @click.prevent="goToMovieDetails(movie.id)">
           <Img
             :src="getImageSource(movie.poster_path, 'poster')"
@@ -24,7 +29,6 @@
 
 <script>
 import AuthService from "@/services/AuthService";
-import WatchlistService from "@/services/WatchlistService";
 
 import { mapGetters } from "vuex";
 
@@ -34,44 +38,18 @@ import MovieMixin from "@/mixins/MovieMixin";
 export default {
   name: "Watchlist",
   mixins: [ImageMixin, MovieMixin],
-  data() {
-    return {
-      watchlist: []
-    };
-  },
   computed: {
-    ...mapGetters(["isAuthenticated", "sessionId", "accountId"])
-  },
-  created() {
-    if (this.isAuthenticated) {
-      this.getUserWatchlist();
-
-      // I'm leaving this as an example if you want to add movies to your watchlist to test the watchlist display
-      WatchlistService.addMovieToWatchlist(
-        this.sessionId,
-        this.accountId,
-        31011
-      ).then(response => console.log(response));
-    }
+    ...mapGetters(["isAuthenticated", "sessionId", "accountId", "watchlist"])
   },
   methods: {
-    getUserWatchlist() {
-      if (!this.isAuthenticated || !this.sessionId || !this.accountId) {
-        return;
-      }
-      WatchlistService.getMoviesWatchlist(this.sessionId, this.accountId).then(
-        response => {
-          if (response && response.length) {
-            this.watchlist = response;
-          }
-        }
-      );
-    },
     login() {
       AuthService.login().then(response => {
         if (response) {
           this.$store.dispatch("login", response);
-          this.getUserWatchlist();
+          this.$store.dispatch("getWatchlist", {
+            sessionId: this.sessionId,
+            accountId: this.accountId
+          });
         }
       });
     },
