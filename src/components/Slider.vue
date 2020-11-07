@@ -221,11 +221,12 @@ export default {
     .slider__control__button {
       display: flex;
       align-items: center;
+      justify-content: center;
+      width: 70px;
       height: 100%;
       background: transparent;
       outline: none;
       color: #ffffff;
-      padding: 0 22px;
 
       > svg {
         width: 24px;

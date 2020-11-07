@@ -145,7 +145,7 @@ section {
 .views {
   transform: translateY(-15vh);
   position: relative;
-  z-index: 1000;
+  z-index: 1070;
 
   section {
     min-height: 150px;

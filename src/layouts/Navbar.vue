@@ -35,7 +35,7 @@ export default {
   width: 100%;
   height: 100px;
   padding: 0 60px;
-  z-index: 1070;
+  z-index: 1100;
 
   .navbar__links {
     display: flex;

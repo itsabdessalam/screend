@@ -1,5 +1,10 @@
 <template>
   <div class="billboard">
+    <Modal v-if="video && showModal" @close="closeModal">
+      <template #body>
+        <Player :id="video.id" />
+      </template>
+    </Modal>
     <div class="billboard__inner">
       <div class="billboard__meta col-5">
         <div>
@@ -38,11 +43,6 @@
               >
                 Watch trailer
               </button>
-              <Modal v-if="showModal" @close="closeModal">
-                <template #body>
-                  <Player :id="video.id" />
-                </template>
-              </Modal>
             </div>
           </div>
         </div>
