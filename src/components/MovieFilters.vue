@@ -41,15 +41,27 @@
       />
       <span v-if="warningMessageText">{{ warningMessageText }}</span>
     </div>
+    <div style="display: inline-block; float: right; padding-right: 50px;">
+      <label class="typo__label">Sort by:</label>
+      <multiselect
+        v-model="filters.sortBy"
+        :value="filters.sortBy"
+        :options="sortByFilters"
+        :searchable="false"
+        :allow-empty="false"
+        label="label"
+        track-by="label"
+        placeholder="Select..."
+        :disabled="!!searchedText.length"
+      ></multiselect>
+    </div>
   </div>
 </template>
 
 <script>
-/**
- * @TODO if enough time, add "sort by" filter
- */
 import Multiselect from "vue-multiselect";
 import config from "@/config";
+
 export default {
   name: "MovieFilters",
   components: {
@@ -68,9 +80,11 @@ export default {
       filters: {
         includeUpcoming: false,
         selectedGenres: [],
-        selectedYear: null
+        selectedYear: null,
+        sortBy: config.DEFAULT_SORT_BY_FILTER
       },
       searchedText: "",
+      sortByFilters: Object.values(config.SORT_BY_FILTERS).flat(),
       updateTimer: false,
       warningMessageText: null
     };
