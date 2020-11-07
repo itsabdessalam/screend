@@ -3,6 +3,18 @@
     <h2>Movie</h2>
     <button @click="goBack">Back</button>
     <div>
+      <div v-if="isAuthenticated">
+        <button
+          v-if="isInWatchlist"
+          @click="removeMovieFromWatchlist(sessionId, accountId, movie.id)"
+        >
+          Remove from watchlist
+        </button>
+        <button v-else @click="addToWatchlist(sessionId, accountId, movie)">
+          Add to watchlist
+        </button>
+      </div>
+
       <h3>{{ movie.title }}</h3>
       <!-- Backdrop -->
       <Img
@@ -78,11 +90,14 @@
 <script>
 import MovieService from "@/services/MovieService";
 
+import { mapGetters } from "vuex";
+
 import ImageMixin from "@/mixins/ImageMixin";
+import MovieMixin from "@/mixins/MovieMixin";
 
 export default {
   name: "movie",
-  mixins: [ImageMixin],
+  mixins: [ImageMixin, MovieMixin],
   data() {
     return {
       cast: [],
@@ -93,6 +108,12 @@ export default {
       reviews: [],
       total_reviews: 0
     };
+  },
+  computed: {
+    ...mapGetters(["isAuthenticated", "sessionId", "accountId", "watchlist"]),
+    isInWatchlist() {
+      return this.isMovieInWatchlist(this.watchlist, this.movie.id);
+    }
   },
   beforeRouteEnter(to, from, next) {
     next(vm => {

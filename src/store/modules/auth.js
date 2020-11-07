@@ -5,7 +5,7 @@ const state = {
 };
 
 const getters = {
-  isAuthenticated: state => !!state.sessionId,
+  isAuthenticated: state => !!state.sessionId.length,
   sessionId: state => state.sessionId,
   accountId: state => state.accountId,
   accessToken: state => state.accessToken
