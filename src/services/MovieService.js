@@ -118,6 +118,7 @@ export default {
    * @param {Number} selectedYear - release year
    * @param {Array<Object>} selectedGenres - list of genres { id, name }
    * @param {Boolean} includeUpcoming - include upcoming movies or not
+   * @param {Boolean} upcomingOnly - can be activated through the home page, section "Upcoming" only
    * @returns {Promise<Object>} { page, results, total_pages, total_results }
    */
   async getMoviesDiscoveryList({
@@ -125,23 +126,33 @@ export default {
     region = "US",
     selectedYear = null,
     selectedGenres = [],
-    includeUpcoming = false
+    includeUpcoming = false,
+    upcomingOnly = false,
+    singleRequest = false
   }) {
     try {
       let page = 1;
       let query = `?api_key=${process.env.VUE_APP_API_KEY}&sort_by=${sortBy.value}&region=${region}&language=en-US`;
 
       /**
-       * If no specific year mentionned and if upcoming movies should not be included,
+       * Priority to upcomingOnly filter, it takes over the other dates related filters
+       * Then, if no specific year mentionned and if upcoming movies should not be included,
        * get the movies already released only
+       *
+       * The dates are formatted like: 2020-10-24
        */
-      if (!selectedYear && !includeUpcoming) {
-        // Format the current date like: 2020-10-24
-        const dateLimit = new Date().toISOString().slice(0, 10);
-        query += `&release_date.lte=${dateLimit}`;
-      }
-
-      if (selectedYear) {
+      if (upcomingOnly) {
+        const dateLimit = new Date();
+        // Add one day to the current date to skip movies released today
+        dateLimit.setDate(dateLimit.getDate() + 1);
+        query += `&primary_release_date.gte=${dateLimit
+          .toISOString()
+          .slice(0, 10)}`;
+      } else if (!selectedYear && !includeUpcoming) {
+        query += `&primary_release_date.lte=${new Date()
+          .toISOString()
+          .slice(0, 10)}`;
+      } else if (selectedYear) {
         query += `&primary_release_year=${selectedYear}`;
       }
 
@@ -150,6 +161,14 @@ export default {
         query += `&with_genres=${selectedGenres
           .map(item => item.id)
           .join(",")}`;
+      }
+
+      // Only return one set of movies instead of the maximum number of movies at once
+      if (singleRequest) {
+        const result = await request({
+          url: `${BASE_API_URL_V3}/discover/movie${query}&page=${page}`
+        });
+        return result.results;
       }
 
       let list = [];
