@@ -10,26 +10,29 @@ export default {
   /**
    * Get list of movies matching a user input
    * @param {String} query - user input
-   * @returns {Promise<Object>} { list: Array, page: Number }
+   * @param {Number} nbRequests - how many requests should we make, it determines how many movies we return (20 movies per request)
+   * @param {Number} page - the number of the first page we query, can be different than 1 if previous requests have been made
+   * @returns {Promise<Object>} { list: Array, page: Number, hasMoreResults: Boolean }
    */
-  async getMovieSearchList(query) {
+  async getMovieSearchList(query, nbRequests = MAX_REQUESTS_NUMBER, page = 1) {
     try {
-      let page = 1;
       let list = [];
       let hasMoreResults = true;
-      while (page <= MAX_REQUESTS_NUMBER && hasMoreResults) {
+      let pagesFetched = 1;
+      while (pagesFetched <= nbRequests && hasMoreResults) {
         const result = await request({
           url: `${BASE_API_URL_V3}/search/movie?api_key=${process.env.VUE_APP_API_KEY}&query=${query}&language=${DEFAULT_API_LOCALE}&page=${page}`
         });
 
-        if (!result.results.length) {
-          hasMoreResults = false;
+        list = list.concat(result.results);
+        hasMoreResults = result.total_pages > page;
+        if (!hasMoreResults) {
           break;
         }
-        list = list.concat(result.results);
         page++;
+        pagesFetched++;
       }
-      return list;
+      return { list, page, hasMoreResults };
     } catch (error) {
       return null;
     }
@@ -90,7 +93,9 @@ export default {
    * @param {Array<Object>} selectedGenres - list of genres { id, name }
    * @param {Boolean} includeUpcoming - include upcoming movies or not
    * @param {Boolean} upcomingOnly - can be activated through the home page, section "Upcoming" only
-   * @returns {Promise<Object>} { page, results, total_pages, total_results }
+   * @param {Number} nbRequests - how many requests should we make, it determines how many movies we return (20 movies per request)
+   * @param {Number} page - the number of the first page we query, can be different than 1 if previous requests have been made
+   * @returns {Promise<Object>} { list: Array, page: Number, hasMoreResults: Boolean }
    */
   async getMoviesDiscoveryList({
     sortBy = DEFAULT_SORT_BY_FILTER,
@@ -99,10 +104,10 @@ export default {
     selectedGenres = [],
     includeUpcoming = false,
     upcomingOnly = false,
-    singleRequest = false
+    nbRequests = MAX_REQUESTS_NUMBER,
+    page = 1
   }) {
     try {
-      let page = 1;
       let query = `?api_key=${process.env.VUE_APP_API_KEY}&sort_by=${sortBy.value}&region=${region}&language=en-US`;
 
       /**
@@ -134,31 +139,26 @@ export default {
           .join(",")}`;
       }
 
-      // Only return one set of movies instead of the maximum number of movies at once
-      if (singleRequest) {
-        const result = await request({
-          url: `${BASE_API_URL_V3}/discover/movie${query}&page=${page}`
-        });
-        return result.results;
-      }
-
       let list = [];
       let hasMoreResults = true;
+      let pagesFetched = 1;
       // Get the maximum of results
-      while (page <= MAX_REQUESTS_NUMBER && hasMoreResults) {
+      while (pagesFetched <= nbRequests && hasMoreResults) {
         const result = await request({
           url: `${BASE_API_URL_V3}/discover/movie${query}&page=${page}`
         });
 
-        if (!result.results.length) {
-          hasMoreResults = false;
+        list = list.concat(result.results);
+        hasMoreResults = result.total_pages > page;
+        if (!hasMoreResults) {
           break;
         }
-        list = list.concat(result.results);
+
         page++;
+        pagesFetched++;
       }
 
-      return list;
+      return { list, page, hasMoreResults };
     } catch (error) {
       return null;
     }
