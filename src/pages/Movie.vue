@@ -95,6 +95,8 @@ import { mapGetters } from "vuex";
 import ImageMixin from "@/mixins/ImageMixin";
 import MovieMixin from "@/mixins/MovieMixin";
 
+import { GO_BACK_ROUTES } from "@/config";
+
 export default {
   name: "movie",
   mixins: [ImageMixin, MovieMixin],
@@ -146,11 +148,14 @@ export default {
       return hours + "h" + minutes;
     },
     goBack() {
-      if (this.prevRoute.name !== "watchlist") {
-        this.$router.push("/movies");
+      const authorizedRoute = Object.values(GO_BACK_ROUTES).find(
+        route => route.name === this.prevRoute.name
+      );
+      if (authorizedRoute) {
+        this.$router.push(authorizedRoute.path);
         return;
       }
-      this.$router.push("/watchlist");
+      this.$router.push("/");
     },
     loadMoreReviews() {
       this.currentReviewPage++;

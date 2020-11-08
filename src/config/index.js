@@ -67,7 +67,21 @@ const config = {
         { name: "upcomingOnly", value: true }
       ]
     }
-  ]
+  ],
+  GO_BACK_ROUTES: {
+    HOME: {
+      name: "home",
+      path: "/"
+    },
+    MOVIES: {
+      name: "movies",
+      path: "/movies"
+    },
+    WATCHLIST: {
+      name: "watchlist",
+      path: "/watchlist"
+    }
+  }
 };
 
 /**
