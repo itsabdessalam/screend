@@ -82,35 +82,6 @@ export default {
     }
   },
   /**
-   * Get the list of the trending movies
-   * @param {Number} page
-   * @returns {Promise<Object>} { page, results, total_pages, total_results }
-   */
-  async getTrendingMovies(page = 1) {
-    try {
-      return await request({
-        url: `${BASE_API_URL_V3}/trending/movie/week?api_key=${process.env.VUE_APP_API_KEY}&page=${page}`
-      });
-    } catch (error) {
-      return null;
-    }
-  },
-  /**
-   * Get the list of the upcoming movies
-   * @param {Number} page
-   * @param {String} region - two-letter code like US, FR, DE, IT...
-   * @returns {Promise<Object>} { page, results, total_pages, total_results }
-   */
-  async getUpcomingMovies(page = 1, region = "US") {
-    try {
-      return await request({
-        url: `${BASE_API_URL_V3}/movie/upcoming?api_key=${process.env.VUE_APP_API_KEY}&page=${page}&region=${region}`
-      });
-    } catch (error) {
-      return null;
-    }
-  },
-  /**
    * Get the list of movies to discover
    *
    * @param {String} sortBy - look at the API available list (https://developers.themoviedb.org/3/discover/movie-discover)
@@ -188,22 +159,6 @@ export default {
       }
 
       return list;
-    } catch (error) {
-      return null;
-    }
-  },
-  /**
-   * Get the list of available countries in the API
-   *
-   * @COMMENTS Could be useful for our filters
-   *
-   * @returns {Promise<Array>}
-   */
-  async getAvailableCountriesList() {
-    try {
-      return await request({
-        url: `${BASE_API_URL_V3}/configuration/countries?api_key=${process.env.VUE_APP_API_KEY}`
-      });
     } catch (error) {
       return null;
     }
