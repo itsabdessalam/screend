@@ -18,8 +18,6 @@
 import Header from "./Header";
 import Footer from "./Footer";
 
-// import MovieService from "@/services/MovieService"
-
 export default {
   components: {
     Header,
@@ -29,11 +27,6 @@ export default {
     return {
       device: "desktop"
     };
-  },
-  created() {
-    // MovieService.getMovieSearchList("ava").then(response => {
-    //   console.log(response);
-    // });
   },
   mounted() {
     this.setDevice();
@@ -66,7 +59,8 @@ export default {
     min-height: calc(100vh - 125px);
   }
 
-  &[data-page="movies"] {
+  &[data-page="movies"],
+  &[data-page="movie-details"] {
     .content {
       padding: 0 60px;
     }

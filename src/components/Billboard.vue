@@ -151,11 +151,11 @@ export default {
   .billboard__meta {
     display: flex;
     align-items: center;
-    padding: 0 60px;
+    padding: 0 0 0 60px;
     z-index: 1070;
 
     .billboard__title {
-      font-size: 56px;
+      font-size: 48px;
       margin-bottom: 12px;
     }
 

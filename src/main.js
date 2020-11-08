@@ -10,14 +10,17 @@ import "@/assets/fonts/index.scss";
 import "@/assets/sass/globals.scss";
 
 import { truncate, convertStringToKebabCase } from "@/filters/string";
-import { year } from "@/filters/date";
+import { getYear, getLocaleDate } from "@/filters/date";
+import { getLanguageName } from "@/filters/language";
 
 Vue.config.productionTip = false;
 
 Vue.component("Img", Img);
 Vue.filter("truncate", truncate);
 Vue.filter("toKebabCase", convertStringToKebabCase);
-Vue.filter("year", year);
+Vue.filter("year", getYear);
+Vue.filter("toLanguageName", getLanguageName);
+Vue.filter("toLocaleDate", getLocaleDate);
 
 new Vue({
   router,

@@ -71,7 +71,21 @@ const config = {
       ],
       limit: 20
     }
-  ]
+  ],
+  GO_BACK_ROUTES: {
+    HOME: {
+      name: "home",
+      path: "/"
+    },
+    MOVIES: {
+      name: "movies",
+      path: "/movies"
+    },
+    WATCHLIST: {
+      name: "watchlist",
+      path: "/watchlist"
+    }
+  }
 };
 
 /**
@@ -84,7 +98,9 @@ config.BASE_API_URL_V4 = `${config.BASE_API_URL}/4`;
 
 config.IMAGES_SIZES = {
   backdrop: "w342",
+  backdrop_full: "w1280",
   poster: "w342",
+  poster_full: "w1280",
   profile: "w185",
   default: "orignal"
 };

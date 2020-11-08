@@ -1,1 +1,1 @@
-export { getYear as year } from "@/utils/date";
+export { getYear, getLocaleDate } from "@/utils/date";

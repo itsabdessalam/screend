@@ -7,8 +7,8 @@
       <ul class="navbar__links">
         <router-link class="navbar__link" to="/">Home</router-link>
         <router-link class="navbar__link" to="/movies">Movies</router-link>
-        <router-link class="navbar__link" to="/latest">Latest</router-link>
         <router-link class="navbar__link" to="/watchlist">My list</router-link>
+        <router-link class="navbar__link" to="/account">Account</router-link>
       </ul>
     </div>
   </div>

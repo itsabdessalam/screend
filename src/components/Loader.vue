@@ -1,7 +1,9 @@
 <template>
   <div class="loader">
-    <div class="loader__circle"></div>
-    <!-- <img src="@/assets/images/screend-white.png" alt="Screend logo" /> -->
+    <div class="dot dot1"></div>
+    <div class="dot dot2"></div>
+    <div class="dot dot3"></div>
+    <div class="dot dot4"></div>
   </div>
 </template>
 
@@ -13,38 +15,86 @@ export default {
 
 <style lang="scss" scoped>
 .loader {
-  width: 70px;
-  height: 70px;
+  width: 36px;
+  height: 10px;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
   margin: auto;
-  display: block;
-  position: relative;
-  background-image: url("~@/assets/images/screend-loader.png");
-  background-size: 40px;
-  background-position: center;
-  background-repeat: no-repeat;
+  position: absolute;
 
-  .loader__circle {
-    width: 70px;
-    height: 70px;
-    animation: circle infinite 0.75s linear;
-    border: 4px solid $primary;
-    border-top-color: transparent;
-    border-radius: 100%;
+  .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 5px;
+    background-color: $primary;
+    position: absolute;
+    animation-duration: 0.6s;
+    animation-timing-function: easeOutExpo;
+    animation-iteration-count: infinite;
+  }
+
+  .dot1,
+  .dot2 {
+    left: 0;
+  }
+
+  .dot3 {
+    left: 13px;
+  }
+
+  .dot4 {
+    left: 26px;
+  }
+
+  .dot1 {
+    animation-name: show;
+  }
+
+  .dot2,
+  .dot3 {
+    animation-name: slide;
+  }
+
+  .dot4 {
+    animation-name: hide;
   }
 }
 
-@keyframes circle {
+@keyframes show {
   0% {
-    -webkit-transform: rotate(0);
-    -ms-transform: rotate(0);
-    -o-transform: rotate(0);
-    transform: rotate(0);
+    opacity: 0;
+  }
+  30% {
+    transform: scale(1.2);
+  }
+  90% {
+    transform: scale(1);
   }
   100% {
-    -webkit-transform: rotate(360deg);
-    -ms-transform: rotate(360deg);
-    -o-transform: rotate(360deg);
-    transform: rotate(360deg);
+    opacity: 1;
+  }
+}
+
+@keyframes hide {
+  0% {
+    opacity: 1;
+  }
+  30% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes slide {
+  40% {
+    transform: translateX(14px);
+  }
+  100% {
+    transform: translateX(13px);
   }
 }
 </style>

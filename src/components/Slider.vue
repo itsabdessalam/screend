@@ -77,7 +77,7 @@ export default {
       // Trigger resize event to setup slider after all elements are displayed
       setTimeout(() => {
         window.dispatchEvent(new Event("resize"));
-      }, 500);
+      }, 250);
     },
     next() {
       const [slideWidth] = getSize(this.slider.querySelector(".slider__item"));
@@ -169,7 +169,7 @@ export default {
       display: inline-block;
       width: calc(80vw - 60px);
       height: auto;
-      overflow: auto;
+      overflow: hidden;
       cursor: pointer;
       z-index: 950;
 

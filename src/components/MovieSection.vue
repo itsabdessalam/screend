@@ -61,10 +61,11 @@ export default {
     getMoviesList() {
       MovieService.getMoviesDiscoveryList({
         ...this.filters,
-        singleRequest: true
+        nbRequests: 1
       })
         .then(response => {
-          this.movies = response.slice(0, this.section.limit);
+          this.movies = response.list.slice(0, this.section.limit);
+          this.$emit("loadSection", this.section.title);
         })
         .catch(error => {
           console.error(error);

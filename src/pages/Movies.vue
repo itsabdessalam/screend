@@ -22,6 +22,9 @@
             </div>
           </router-link>
         </div>
+        <button v-if="hasMoreResults" @click="fetchMoreMovies">
+          See more...
+        </button>
       </div>
       <div v-else-if="!isLoading && !movies.length">No movie available</div>
       <Loader v-else />
@@ -37,6 +40,8 @@ import MovieService from "@/services/MovieService";
 import ImageMixin from "@/mixins/ImageMixin";
 import MovieMixin from "@/mixins/MovieMixin";
 
+import { mapGetters } from "vuex";
+
 export default {
   name: "Movies",
   components: {
@@ -46,34 +51,75 @@ export default {
   mixins: [ImageMixin, MovieMixin],
   data() {
     return {
+      currentPage: 1,
+      hasMoreResults: false,
       isLoading: true,
+      isSearchingByText: false,
       genres: [],
       movies: []
     };
+  },
+  computed: {
+    ...mapGetters(["filters", "searchedText"])
   },
   created() {
     MovieService.getGenresList().then(response => (this.genres = response));
   },
   methods: {
-    getMoviesList(filters) {
+    fetchMoreMovies() {
+      /**
+       * I don't really know what would the correct number of movies to add
+       * For now, I set nbRequests to 2 (= 40 movies) but I'll let you test
+       * and see if you think a single request is enough
+       * or if we can add even more movies with 'see more'
+       */
+      if (this.isSearchingByText) {
+        this.searchInMoviesList(this.searchedText, false, 2, this.currentPage);
+        return;
+      }
+      this.getMoviesList(
+        {
+          ...this.filters,
+          page: this.currentPage,
+          nbRequests: 2
+        },
+        false
+      );
+    },
+    getMoviesList(filters, resetMovies = true) {
       this.isLoading = true;
+      this.isSearchingByText = false;
       // Request to get movies filtered by genres, year, etc.
       MovieService.getMoviesDiscoveryList(filters)
-        .then(response => (this.movies = response))
+        .then(response => {
+          this.setMoviesData(response, resetMovies);
+        })
         .catch(error => {
           console.error(error);
         })
         .finally(() => (this.isLoading = false));
     },
-    searchInMoviesList(text) {
+    searchInMoviesList(text, resetMovies = true, nbRequests, page) {
       this.isLoading = true;
+      this.isSearchingByText = true;
       // Request to get movies filtered by a user input
-      MovieService.getMovieSearchList(text)
-        .then(response => (this.movies = response))
+      MovieService.getMovieSearchList(text, nbRequests, page)
+        .then(response => {
+          this.setMoviesData(response, resetMovies);
+        })
         .catch(error => {
           console.error(error);
         })
         .finally(() => (this.isLoading = false));
+    },
+    setMoviesData(response, resetMovies) {
+      if (resetMovies) {
+        this.movies = response.list;
+      } else {
+        this.movies = this.movies.concat(response.list);
+      }
+      this.currentPage = response.page;
+      this.hasMoreResults = response.hasMoreResults;
     }
   }
 };

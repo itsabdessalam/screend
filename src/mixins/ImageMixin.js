@@ -1,5 +1,5 @@
 import config from "@/config";
-import ScreendPortraitImg from "@/assets/images/screend-portrait.png";
+import ScreendPortraitImg from "@/assets/images/screend-placeholder.jpg";
 
 export default {
   methods: {
