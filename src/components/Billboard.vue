@@ -36,13 +36,13 @@
               View details
             </router-link>
             <div v-if="video">
-              <button
+              <Button
                 id="show-modal"
-                class="billboard__action billboard__action--trailer"
+                class="button--primary billboard__action billboard__action--trailer"
                 @click="openModal"
               >
                 Watch trailer
-              </button>
+              </Button>
             </div>
           </div>
         </div>
@@ -61,6 +61,7 @@
 <script>
 import Modal from "./Modal";
 import Player from "./Player";
+import Button from "./Button";
 import { IMDb as IMDbIcon } from "@/icons";
 
 import MoviePlayerMixin from "@/mixins/MoviePlayerMixin";
@@ -68,7 +69,6 @@ import MoviePlayerMixin from "@/mixins/MoviePlayerMixin";
 export default {
   name: "Billboard",
   mixins: [MoviePlayerMixin],
-
   props: {
     movie: {
       type: Object,
@@ -78,6 +78,7 @@ export default {
   components: {
     Modal,
     Player,
+    Button,
     IMDbIcon
   }
 };
@@ -164,10 +165,6 @@ export default {
         background-color: $secondary;
         color: #ffffff;
         margin-right: 8px;
-      }
-
-      &--trailer {
-        background-color: $primary;
       }
     }
   }

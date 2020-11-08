@@ -5,17 +5,34 @@
 </template>
 
 <script>
+import { BASE_IMAGE_URL, IMAGES_SIZES } from "@/config";
+import Placeholder from "@/assets/images/screend-placeholder.jpg";
+
 export default {
   name: "Img",
   inheritAttrs: false,
   props: {
     src: {
       type: String,
-      required: true
+      default: ""
+    },
+    type: {
+      type: String,
+      default: "none"
     }
   },
   mounted() {
-    const { $el, src } = this;
+    let { $el, src, type } = this;
+
+    if (Object.keys(IMAGES_SIZES).indexOf(type) !== -1) {
+      let size = IMAGES_SIZES[type] || IMAGES_SIZES["default"];
+
+      if (src) {
+        src = `${BASE_IMAGE_URL}/${size}${src}`;
+      } else {
+        src = Placeholder;
+      }
+    }
 
     const observer = new IntersectionObserver(([entry]) => {
       const image = $el.querySelector(".image__item");

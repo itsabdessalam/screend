@@ -7,6 +7,7 @@
           <Player :id="video.id" />
         </template>
       </Modal>
+      <!-- TODO: add full backdrop with blur effect -->
       <!-- <div class="movie__backdrop">
         <Img
           :src="getImageSource(movie.backdrop_path, 'backdrop_full')"
@@ -24,10 +25,7 @@
               } `
             "
           >
-            <Img
-              :src="getImageSource(movie.poster_path, 'poster')"
-              :alt="movie.title"
-            />
+            <Img :src="movie.poster_path" :alt="movie.title" type="poster" />
             <span class="movie__rate" v-if="movie.vote_average">
               {{ movie.vote_average * 10 }}% Match
             </span>
@@ -79,34 +77,33 @@
                 }}</span>
               </li>
             </ul>
-
             <div class="movie__actions">
               <div v-if="isAuthenticated">
-                <button
+                <Button
                   v-if="isInWatchlist"
                   @click="
                     removeMovieFromWatchlist(sessionId, accountId, movie.id)
                   "
-                  class="movie__action movie__action--remove"
+                  class="button--secondary movie__action movie__action--remove"
                 >
                   Remove from watchlist
-                </button>
-                <button
+                </Button>
+                <Button
                   v-else
                   @click="addToWatchlist(sessionId, accountId, movie)"
-                  class="movie__action movie__action--add"
+                  class="button--secondary movie__action movie__action--add"
                 >
                   Add to watchlist
-                </button>
+                </Button>
               </div>
               <div v-if="video">
-                <button
+                <Button
                   id="show-modal"
                   @click="openModal"
-                  class="movie__action movie__action--trailer"
+                  class="button--primary movie__action movie__action--trailer"
                 >
                   Watch trailer
-                </button>
+                </Button>
               </div>
             </div>
           </div>
@@ -121,9 +118,10 @@
             class="movie__cast__item"
           >
             <Img
-              :src="getImageSource(member.profile_path, 'profile')"
+              :src="member.profile_path"
               :alt="member.name"
               class="movie__cast__profile"
+              type="profile"
             />
             <span class="movie__cast__name">
               {{ member.name }}
@@ -142,26 +140,22 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+import { GO_BACK_ROUTES } from "@/config";
 import MovieService from "@/services/MovieService";
 
-import { mapGetters } from "vuex";
-
-import ImageMixin from "@/mixins/ImageMixin";
 import MovieMixin from "@/mixins/MovieMixin";
-
 import MoviePlayerMixin from "@/mixins/MoviePlayerMixin";
-
-import { Modal, Player, Loader } from "@/components";
-
-import { GO_BACK_ROUTES } from "@/config";
+import { Modal, Player, Button, Loader } from "@/components";
 
 export default {
   name: "movie",
-  mixins: [ImageMixin, MovieMixin, MoviePlayerMixin],
+  mixins: [MovieMixin, MoviePlayerMixin],
   components: {
     Modal,
     Player,
-    Loader
+    Loader,
+    Button
   },
   data() {
     return {
@@ -376,20 +370,11 @@ export default {
     margin-top: 32px;
 
     .movie__action {
-      padding: 12px 24px;
-      border-radius: 4px;
-      font-size: 16px;
-      background-color: transparent;
-
       &--add,
       &--remove {
         background-color: #525253;
         color: #ffffff;
         margin-right: 8px;
-      }
-
-      &--trailer {
-        background-color: $primary;
       }
     }
   }

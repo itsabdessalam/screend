@@ -61,7 +61,8 @@ export default {
   }
 
   &[data-page="movies"],
-  &[data-page="movie-details"] {
+  &[data-page="movie-details"],
+  &[data-page="watchlist"] {
     .content {
       padding: 60px 60px 0 60px;
     }

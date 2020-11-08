@@ -7,7 +7,7 @@
       </div>
     </div>
     <div class="section__content">
-      <Slider>
+      <Slider :class="section.title | toKebabCase">
         <MovieItem
           v-for="movie in movies"
           :key="movie.id"

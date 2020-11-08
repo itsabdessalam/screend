@@ -5,25 +5,24 @@
   >
     <Img
       v-if="type === 'poster'"
-      :src="getImageSource(movie.poster_path, 'poster')"
+      :src="movie.poster_path"
       :alt="movie.title"
       class="movie__thumbnail"
+      type="poster"
     />
     <Img
       v-else
-      :src="getImageSource(movie.backdrop_path, 'backdrop')"
+      :src="movie.backdrop_path"
       :alt="movie.title"
       class="movie__thumbnail"
+      type="backdrop"
     />
   </router-link>
 </template>
 
 <script>
-import ImageMixin from "@/mixins/ImageMixin";
-
 export default {
   name: "MovieItem",
-  mixins: [ImageMixin],
   props: {
     movie: {
       type: Object,

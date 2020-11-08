@@ -11,6 +11,7 @@ import Slider from "./Slider";
 import MovieItem from "./MovieItem";
 import MovieFilters from "./MovieFilters";
 import MovieSection from "./MovieSection";
+import MovieList from "./MovieList";
 
 export {
   Billboard,
@@ -25,5 +26,6 @@ export {
   Slider,
   MovieItem,
   MovieFilters,
-  MovieSection
+  MovieSection,
+  MovieList
 };

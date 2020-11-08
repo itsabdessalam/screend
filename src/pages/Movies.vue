@@ -6,39 +6,16 @@
       @updateFilters="getMoviesList"
       @updateSearchedMovies="searchInMoviesList"
     />
-    <div
-      class="movies"
-      v-if="!isLoading && movies.length"
-      :class="isLoading ? 'loading' : 'loaded'"
-    >
-      <div class="movie__list">
-        <div v-for="(movie, index) in movies" :key="index" class="movie__item">
-          <router-link :to="`/movies/${movie.id}`" class="movie__link">
-            <div class="movie__thumbnail">
-              <Img
-                :src="getImageSource(movie.poster_path, 'poster')"
-                :alt="movie.title"
-              />
-            </div>
-            <div class="movie__meta">
-              <p class="movie__title">{{ movie.title }}</p>
-              <p class="movie__release">{{ movie.release_date }}</p>
-            </div>
-          </router-link>
-        </div>
-      </div>
-    </div>
+    <MovieList v-if="!isLoading && movies.length" :movies="movies" />
     <div v-else-if="!isLoading && !movies.length">No movie found...</div>
     <Loader v-else />
   </div>
 </template>
 
 <script>
-import { MovieFilters, Loader } from "@/components";
+import { MovieFilters, MovieList, Loader } from "@/components";
 
 import MovieService from "@/services/MovieService";
-
-import ImageMixin from "@/mixins/ImageMixin";
 import MovieMixin from "@/mixins/MovieMixin";
 
 import { mapGetters } from "vuex";
@@ -47,9 +24,10 @@ export default {
   name: "Movies",
   components: {
     MovieFilters,
+    MovieList,
     Loader
   },
-  mixins: [ImageMixin, MovieMixin],
+  mixins: [MovieMixin],
   data() {
     return {
       currentPage: 1,
@@ -140,70 +118,4 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-.movies {
-  &.loading {
-    display: flex;
-  }
-
-  .movie__list {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    grid-gap: 6px;
-    margin-top: 32px;
-    position: relative;
-
-    .movie__item {
-      .movie__thumbnail {
-        overflow: hidden;
-        transition: transform 0.3s ease-in-out;
-        will-change: transform;
-        transform: scale(1);
-      }
-
-      .movie__meta {
-        color: #ffffff;
-
-        .movie__title {
-          font-size: 14px;
-          font-weight: 500;
-          height: 23px;
-          overflow: hidden;
-          display: block;
-          position: relative;
-
-          &:after {
-            content: "";
-            position: absolute;
-            bottom: 0;
-            right: 0;
-            width: 30px;
-            height: 23px;
-            background: linear-gradient(
-              to right,
-              rgba(0, 0, 0, 0),
-              #000000 80%
-            );
-          }
-        }
-
-        .movie__release {
-          display: none;
-        }
-      }
-
-      &:hover {
-        .movie__thumbnail {
-          transform: scale(1.02);
-        }
-      }
-    }
-  }
-
-  .movies__see-more {
-    position: fixed;
-    bottom: 12px;
-    right: 12px;
-  }
-}
-</style>
+<style lang="scss" scoped></style>

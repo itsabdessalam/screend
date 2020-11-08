@@ -237,5 +237,36 @@ export default {
       }
     }
   }
+
+  &.trending-now {
+    counter-reset: item;
+
+    .slider__items {
+      .slider__item {
+        position: relative;
+        z-index: 1;
+
+        &::before {
+          counter-increment: item;
+          content: counter(item);
+          position: absolute;
+          top: 0;
+          right: 0;
+          color: #ffffff;
+          background-color: #f3bb39;
+          width: 56px;
+          height: 68px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          text-align: center;
+          font-weight: 600;
+          z-index: 100;
+          font-size: 32px;
+          letter-spacing: -3.2px;
+        }
+      }
+    }
+  }
 }
 </style>
