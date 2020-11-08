@@ -14,12 +14,13 @@
         img {
           height: 480px;
           width: 320px;
+
+          object-fit: cover;
         }
       }
     }
   }
 }
-
 
 // [data-page="movie-deat"] {
 //   .billboard__backdrop {

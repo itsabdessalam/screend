@@ -32,7 +32,7 @@
         />
       </div>
     </div>
-    <Loader v-if="!billboardLoaded || !allSectionsLoaded" />
+    <Loader v-show="!billboardLoaded || !allSectionsLoaded" />
   </div>
 </template>
 

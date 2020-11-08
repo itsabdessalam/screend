@@ -6,8 +6,12 @@
       @updateFilters="getMoviesList"
       @updateSearchedMovies="searchInMoviesList"
     />
-    <div class="movies" :class="isLoading ? 'loading' : 'loaded'">
-      <div v-if="!isLoading && movies.length" class="movie__list">
+    <div
+      class="movies"
+      v-if="!isLoading && movies.length"
+      :class="isLoading ? 'loading' : 'loaded'"
+    >
+      <div class="movie__list">
         <div v-for="(movie, index) in movies" :key="index" class="movie__item">
           <router-link :to="`/movies/${movie.id}`" class="movie__link">
             <div class="movie__thumbnail">
@@ -22,13 +26,10 @@
             </div>
           </router-link>
         </div>
-        <button v-if="hasMoreResults" @click="fetchMoreMovies">
-          See more...
-        </button>
       </div>
-      <div v-else-if="!isLoading && !movies.length">No movie available</div>
-      <Loader v-else />
     </div>
+    <div v-else-if="!isLoading && !movies.length">No movie found...</div>
+    <Loader v-else />
   </div>
 </template>
 
@@ -64,6 +65,11 @@ export default {
   },
   created() {
     MovieService.getGenresList().then(response => (this.genres = response));
+
+    window.addEventListener("scroll", this.onScroll);
+    this.$once("hook:beforeDestroy", () => {
+      window.removeEventListener("scroll", this.onScroll);
+    });
   },
   methods: {
     fetchMoreMovies() {
@@ -77,6 +83,7 @@ export default {
         this.searchInMoviesList(this.searchedText, false, 2, this.currentPage);
         return;
       }
+
       this.getMoviesList(
         {
           ...this.filters,
@@ -87,7 +94,7 @@ export default {
       );
     },
     getMoviesList(filters, resetMovies = true) {
-      this.isLoading = true;
+      this.isLoading = !!resetMovies;
       this.isSearchingByText = false;
       // Request to get movies filtered by genres, year, etc.
       MovieService.getMoviesDiscoveryList(filters)
@@ -120,6 +127,14 @@ export default {
       }
       this.currentPage = response.page;
       this.hasMoreResults = response.hasMoreResults;
+    },
+    onScroll() {
+      if (
+        this.hasMoreResults &&
+        window.innerHeight + window.scrollY >= document.body.offsetHeight
+      ) {
+        this.fetchMoreMovies();
+      }
     }
   }
 };
@@ -127,8 +142,6 @@ export default {
 
 <style lang="scss" scoped>
 .movies {
-  height: calc(100vh - 300px);
-
   &.loading {
     display: flex;
   }
@@ -141,8 +154,6 @@ export default {
     position: relative;
 
     .movie__item {
-      overflow: hidden;
-
       .movie__thumbnail {
         overflow: hidden;
         transition: transform 0.3s ease-in-out;
@@ -187,6 +198,12 @@ export default {
         }
       }
     }
+  }
+
+  .movies__see-more {
+    position: fixed;
+    bottom: 12px;
+    right: 12px;
   }
 }
 </style>

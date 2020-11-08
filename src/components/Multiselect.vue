@@ -329,7 +329,7 @@ fieldset[disabled] .multiselect {
   top: 1px;
   width: 48px;
   height: 35px;
-  background: #525253;
+  background: $secondary;
   display: block;
 
   &:before,
@@ -441,7 +441,7 @@ fieldset[disabled] .multiselect {
   line-height: 22px;
   border: none;
   border-radius: 4px;
-  background: #525253;
+  background: $secondary;
   padding: 1px 0 0 5px;
   width: calc(100%);
   transition: border 0.1s ease;
@@ -476,7 +476,7 @@ fieldset[disabled] .multiselect {
   display: block;
   padding: 13px 47px 6px 12px;
   border-radius: 4px;
-  background: #525253;
+  background: $secondary;
 }
 
 .multiselect__tag {
@@ -579,7 +579,7 @@ fieldset[disabled] .multiselect {
 .multiselect__content-wrapper {
   position: absolute;
   display: block;
-  background: #525253;
+  background: $secondary;
   width: 100%;
   max-height: 240px;
   overflow: auto;
@@ -653,7 +653,7 @@ fieldset[disabled] .multiselect {
 
 .multiselect__option--selected {
   background: #f3f3f3;
-  color: #525253;
+  color: $secondary;
 
   &:after {
     content: attr(data-selected);

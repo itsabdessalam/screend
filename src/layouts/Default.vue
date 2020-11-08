@@ -10,18 +10,15 @@
     <main class="content">
       <slot />
     </main>
-    <Footer />
     <span id="device" class="screen-only"></span>
   </div>
 </template>
 <script>
 import Header from "./Header";
-import Footer from "./Footer";
 
 export default {
   components: {
-    Header,
-    Footer
+    Header
   },
   data() {
     return {
@@ -54,15 +51,19 @@ export default {
 <style lang="scss">
 .layout {
   margin: 0 auto;
+  height: 100%;
+  display: block;
 
   .content {
-    min-height: calc(100vh - 125px);
+    min-height: calc(100vh - 100px);
+    height: 100%;
+    display: block;
   }
 
   &[data-page="movies"],
   &[data-page="movie-details"] {
     .content {
-      padding: 0 60px;
+      padding: 60px 60px 0 60px;
     }
   }
 }

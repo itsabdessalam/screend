@@ -1,5 +1,5 @@
 <template>
-  <footer></footer>
+  <footer>Screend</footer>
 </template>
 
 <script>

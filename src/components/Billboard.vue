@@ -63,8 +63,12 @@ import Modal from "./Modal";
 import Player from "./Player";
 import { IMDb as IMDbIcon } from "@/icons";
 
+import MoviePlayerMixin from "@/mixins/MoviePlayerMixin";
+
 export default {
   name: "Billboard",
+  mixins: [MoviePlayerMixin],
+
   props: {
     movie: {
       type: Object,
@@ -75,54 +79,6 @@ export default {
     Modal,
     Player,
     IMDbIcon
-  },
-  data() {
-    return {
-      showModal: false
-    };
-  },
-  computed: {
-    video() {
-      if (
-        this.movie.videos &&
-        this.movie.videos.results &&
-        this.movie.videos.results[0].site === "YouTube" &&
-        this.movie.videos.results[0].type === "Trailer"
-      ) {
-        return {
-          id: this.movie.videos.results[0].key
-        };
-      }
-
-      return null;
-    }
-  },
-  created() {
-    document.addEventListener("keydown", this.onEscape, false);
-    document.addEventListener("click", this.onClickOutside, false);
-
-    this.$once("hook:beforeDestroy", () => {
-      document.removeEventListener("keydown", this.onEscape, false);
-      document.removeEventListener("click", this.onClickOutside, false);
-    });
-  },
-  methods: {
-    onEscape(event) {
-      if (event.keyCode === 27) {
-        this.closeModal();
-      }
-    },
-    onClickOutside(event) {
-      if (event.target.classList.contains("modal__backdrop")) {
-        this.closeModal();
-      }
-    },
-    openModal() {
-      this.showModal = true;
-    },
-    closeModal() {
-      this.showModal = false;
-    }
   }
 };
 </script>
@@ -205,9 +161,9 @@ export default {
       background-color: transparent;
 
       &--details {
-        background-color: #525253;
+        background-color: $secondary;
         color: #ffffff;
-        margin-right: 12px;
+        margin-right: 8px;
       }
 
       &--trailer {

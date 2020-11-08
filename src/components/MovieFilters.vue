@@ -223,16 +223,16 @@ export default {
   }
 
   label {
-    background-color: #525253;
+    background-color: $secondary;
     padding: 12px;
     border-radius: 4px;
     font-size: 16px;
-    border: 1px solid #525253;
+    border: 1px solid $secondary;
     cursor: pointer;
 
     &.unchecked {
-      background-color: #525253;
-      border-color: #525253;
+      background-color: $secondary;
+      border-color: $secondary;
       cursor: not-allowed;
       opacity: 0.6;
     }

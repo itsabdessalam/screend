@@ -185,7 +185,11 @@ export default {
         margin-left: 6px;
       }
 
-      @media (min-width: 768px) {
+      @media (min-width: $phone) {
+        width: 22%;
+      }
+
+      @media (min-width: $lg-desktop) {
         width: 16.66666667%;
       }
     }
