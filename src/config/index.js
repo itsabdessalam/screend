@@ -49,15 +49,18 @@ const config = {
   MOVIES_SECTIONS: [
     {
       title: "Latest",
-      filters: [{ name: "sortBy", value: "primary_release_date.desc" }]
+      filters: [{ name: "sortBy", value: "primary_release_date.desc" }],
+      limit: 20
     },
     {
       title: "Trending now",
-      filters: [{ name: "sortBy", value: "popularity.desc" }]
+      filters: [{ name: "sortBy", value: "popularity.desc" }],
+      limit: 10
     },
     {
       title: "Most watched",
-      filters: [{ name: "sortBy", value: "vote_count.desc" }]
+      filters: [{ name: "sortBy", value: "vote_count.desc" }],
+      limit: 20
     },
     {
       title: "Upcoming",
@@ -65,7 +68,8 @@ const config = {
         { name: "sortBy", value: "primary_release_date.asc" },
         { name: "includeUpcoming", value: true },
         { name: "upcomingOnly", value: true }
-      ]
+      ],
+      limit: 20
     }
   ]
 };

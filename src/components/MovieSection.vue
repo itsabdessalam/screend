@@ -63,7 +63,9 @@ export default {
         ...this.filters,
         singleRequest: true
       })
-        .then(response => (this.movies = response))
+        .then(response => {
+          this.movies = response.slice(0, this.section.limit);
+        })
         .catch(error => {
           console.error(error);
         });

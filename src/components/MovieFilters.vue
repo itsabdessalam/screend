@@ -44,6 +44,9 @@
           >Include incoming movies</label
         >
       </div>
+      <div class="movie__filter movie__filter--separator">
+        <span>OR</span>
+      </div>
       <div class="movie__filter movie__search">
         <svg
           class="w-6 h-6"
@@ -260,6 +263,10 @@ export default {
 
   .movie__filter--sort {
     max-width: 170px;
+  }
+
+  .movie__filter--separator {
+    max-width: 30px;
   }
 
   .movie__search {

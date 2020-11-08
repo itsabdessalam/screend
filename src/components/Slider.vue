@@ -53,8 +53,8 @@ export default {
       slider: null,
       scroll: 0,
       scrolled: false,
-      showSlideRight: true,
-      showSlideLeft: true
+      showSlideRight: false,
+      showSlideLeft: false
     };
   },
   mounted() {
@@ -65,11 +65,6 @@ export default {
     init() {
       // selectors should be queried on each update
       this.slider = this.$el.querySelector(".slider__items");
-      const [windowWidth] = getWindowSize();
-
-      if (this.slider.scrollWidth > windowWidth) {
-        this.showSlideRight = true;
-      }
 
       window.addEventListener("resize", this.onResize);
       this.slider.addEventListener("scroll", this.onScroll);
@@ -78,6 +73,11 @@ export default {
         window.removeEventListener("resize", this.onResize);
         this.slider.removeEventListener("scroll", this.onScroll);
       });
+
+      // Trigger resize event to setup slider after all elements are displayed
+      setTimeout(() => {
+        window.dispatchEvent(new Event("resize"));
+      }, 500);
     },
     next() {
       const [slideWidth] = getSize(this.slider.querySelector(".slider__item"));

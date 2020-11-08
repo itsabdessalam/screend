@@ -30,13 +30,17 @@
       />
     </div>
   </div>
-  <div v-else>
-    Loading...
-  </div>
+  <Loader v-else />
 </template>
 
 <script>
-import { Billboard, Slider, MovieItem, MovieSection } from "@/components";
+import {
+  Billboard,
+  Slider,
+  MovieItem,
+  MovieSection,
+  Loader
+} from "@/components";
 import { mapGetters } from "vuex";
 
 import { MOVIES_SECTIONS } from "@/config";
@@ -49,7 +53,8 @@ export default {
     Billboard,
     Slider,
     MovieItem,
-    MovieSection
+    MovieSection,
+    Loader
   },
   data() {
     return {
