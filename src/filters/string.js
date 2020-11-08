@@ -1,1 +1,1 @@
-export { truncate } from "@/utils/string";
+export { truncate, convertStringToKebabCase } from "@/utils/string";

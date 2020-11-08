@@ -45,7 +45,29 @@ const config = {
         label: "Least ratings"
       }
     ]
-  }
+  },
+  MOVIES_SECTIONS: [
+    {
+      title: "Latest",
+      filters: [{ name: "sortBy", value: "primary_release_date.desc" }]
+    },
+    {
+      title: "Trending now",
+      filters: [{ name: "sortBy", value: "popularity.desc" }]
+    },
+    {
+      title: "Most watched",
+      filters: [{ name: "sortBy", value: "vote_count.desc" }]
+    },
+    {
+      title: "Upcoming",
+      filters: [
+        { name: "sortBy", value: "primary_release_date.asc" },
+        { name: "includeUpcoming", value: true },
+        { name: "upcomingOnly", value: true }
+      ]
+    }
+  ]
 };
 
 /**
@@ -67,6 +89,7 @@ config.DEFAULT_SORT_BY_FILTER = config.SORT_BY_FILTERS.POPULARITY[0];
 
 config.DEFAULT_FILTERS = {
   includeUpcoming: false,
+  upcomingOnly: false,
   selectedGenres: [],
   selectedYear: null,
   sortBy: config.DEFAULT_SORT_BY_FILTER
