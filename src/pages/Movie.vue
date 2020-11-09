@@ -310,8 +310,8 @@ export default {
 
     .movie__poster {
       position: relative;
-      max-height: 480px;
-      max-width: 320px;
+      height: 480px;
+      width: 320px;
 
       &--rated:after {
         content: "";

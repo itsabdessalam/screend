@@ -12,9 +12,8 @@
     .slider__item {
       &.poster {
         img {
-          height: 480px;
-          width: 320px;
-
+          height: 100%;
+          width: 100%;
           object-fit: cover;
         }
       }

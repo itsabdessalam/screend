@@ -59,14 +59,21 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.image__item {
-  display: inline-block;
+.image__wrapper {
   position: relative;
-  opacity: 0;
-  transition: opacity 300ms ease;
+  display: block;
+  width: 100%;
+  height: 100%;
 
-  &--loaded {
-    opacity: 1;
+  .image__item {
+    display: inline-block;
+    position: relative;
+    opacity: 0;
+    transition: opacity 300ms ease;
+
+    &--loaded {
+      opacity: 1;
+    }
   }
 }
 </style>
