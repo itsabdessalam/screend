@@ -94,7 +94,7 @@ export default {
         // Trigger resize event to setup slider after all elements are displayed
         setTimeout(() => {
           window.dispatchEvent(new Event("resize"));
-        }, 250);
+        }, 500);
       }
     }
   }
