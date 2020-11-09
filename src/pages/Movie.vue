@@ -27,7 +27,8 @@
           >
             <Img :src="movie.poster_path" :alt="movie.title" type="poster" />
             <span class="movie__rate" v-if="movie.vote_average">
-              {{ movie.vote_average * 10 }}% Match
+              <IMDbIcon />
+              <span>{{ movie.vote_average }}</span>
             </span>
           </div>
           <div
@@ -147,6 +148,7 @@ import MovieService from "@/services/MovieService";
 import MovieMixin from "@/mixins/MovieMixin";
 import MoviePlayerMixin from "@/mixins/MoviePlayerMixin";
 import { Modal, Player, Button, Loader } from "@/components";
+import { IMDb as IMDbIcon } from "@/icons";
 
 export default {
   name: "movie",
@@ -155,7 +157,8 @@ export default {
     Modal,
     Player,
     Loader,
-    Button
+    Button,
+    IMDbIcon
   },
   data() {
     return {
@@ -209,7 +212,7 @@ export default {
     convertMovieRuntime(runtime) {
       var hours = Math.floor(runtime / 60);
       var minutes = runtime % 60;
-      return hours + "h" + minutes;
+      return hours + "h " + minutes;
     },
     goBack() {
       const authorizedRoute = Object.values(GO_BACK_ROUTES).find(
@@ -332,13 +335,25 @@ export default {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      color: #ffffff;
-      font-size: 14px;
+      border-radius: 4px;
+      border: 1px solid $primary;
+      color: $primary;
+      font-size: 12px;
       font-weight: 500;
+      width: 66px;
+      padding: 0 6px 0 0px;
+      line-height: 22px;
+      z-index: 100;
+
       position: absolute;
       bottom: 12px;
-      left: 12px;
+      right: 12px;
       z-index: 100;
+
+      > svg {
+        width: 38px;
+        height: auto;
+      }
     }
   }
 

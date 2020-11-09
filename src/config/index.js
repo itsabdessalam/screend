@@ -3,7 +3,7 @@ const config = {
   BASE_IMAGE_URL: "https://image.tmdb.org/t/p",
   DEFAULT_API_LOCALE: "en-US",
   MAX_REQUESTS_NUMBER: 15,
-  MIN_MOVIE_YEAR: 1888,
+  MIN_MOVIE_YEAR: 1890,
   SORT_BY_FILTERS: {
     POPULARITY: [
       {
