@@ -73,11 +73,6 @@ export default {
         window.removeEventListener("resize", this.onResize);
         this.slider.removeEventListener("scroll", this.onScroll);
       });
-
-      // Trigger resize event to setup slider after all elements are displayed
-      setTimeout(() => {
-        window.dispatchEvent(new Event("resize"));
-      }, 250);
     },
     next() {
       const [slideWidth] = getSize(this.slider.querySelector(".slider__item"));
@@ -185,12 +180,21 @@ export default {
         margin-left: 6px;
       }
 
-      @media (min-width: $phone) {
-        width: 22%;
-      }
+      &.poster {
+        @media (min-width: $phone) {
+          width: 267px;
+          height: 400px;
+        }
 
-      @media (min-width: $lg-desktop) {
-        width: 16.66666667%;
+        @media (min-width: $tablet) {
+          width: 320px;
+          height: 480px;
+        }
+
+        @media (min-width: $lg-desktop) {
+          width: 384px;
+          height: 576px;
+        }
       }
     }
   }
@@ -254,7 +258,7 @@ export default {
           right: 0;
           color: #ffffff;
           background-color: #f3bb39;
-          width: 56px;
+          width: 48px;
           height: 68px;
           display: flex;
           align-items: center;

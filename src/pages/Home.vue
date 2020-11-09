@@ -88,8 +88,14 @@ export default {
     loadSection(title) {
       if (this.moviesSections.find(section => section.title === title))
         this.loadedSections++;
-      if (this.loadedSections === this.moviesSectionsCount)
+      if (this.loadedSections === this.moviesSectionsCount) {
         this.allSectionsLoaded = true;
+
+        // Trigger resize event to setup slider after all elements are displayed
+        setTimeout(() => {
+          window.dispatchEvent(new Event("resize"));
+        }, 250);
+      }
     }
   }
 };
