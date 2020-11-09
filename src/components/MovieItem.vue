@@ -3,27 +3,26 @@
     :to="`/movies/${movie.id}`"
     :class="`slider__item ${this.type} movie`"
   >
-    <div v-if="type === 'poster'">
-      <Img
-        :src="getImageSource(movie.poster_path, 'poster')"
-        :alt="movie.title"
-      />
-    </div>
-    <div v-else>
-      <Img
-        :src="getImageSource(movie.backdrop_path, 'backdrop')"
-        :alt="movie.title"
-      />
-    </div>
+    <Img
+      v-if="type === 'poster'"
+      :src="movie.poster_path"
+      :alt="movie.title"
+      class="movie__thumbnail"
+      type="poster"
+    />
+    <Img
+      v-else
+      :src="movie.backdrop_path"
+      :alt="movie.title"
+      class="movie__thumbnail"
+      type="backdrop"
+    />
   </router-link>
 </template>
 
 <script>
-import ImageMixin from "@/mixins/ImageMixin";
-
 export default {
   name: "MovieItem",
-  mixins: [ImageMixin],
   props: {
     movie: {
       type: Object,
@@ -40,4 +39,25 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.movie {
+  overflow: hidden;
+
+  .movie__thumbnail {
+    overflow: hidden;
+    transition: transform 0.3s ease-in-out;
+    will-change: transform;
+    transform: scale(1);
+
+    img {
+      overflow: hidden;
+    }
+  }
+
+  &:hover {
+    .movie__thumbnail {
+      transform: scale(1.02);
+    }
+  }
+}
+</style>

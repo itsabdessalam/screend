@@ -7,7 +7,7 @@
       </div>
     </div>
     <div class="section__content">
-      <Slider>
+      <Slider :class="section.title | toKebabCase">
         <MovieItem
           v-for="movie in movies"
           :key="movie.id"
@@ -63,7 +63,10 @@ export default {
         ...this.filters,
         nbRequests: 1
       })
-        .then(response => (this.movies = response.list))
+        .then(response => {
+          this.movies = response.list.slice(0, this.section.limit);
+          this.$emit("loadSection", this.section.title);
+        })
         .catch(error => {
           console.error(error);
         });

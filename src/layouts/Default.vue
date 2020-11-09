@@ -10,30 +10,20 @@
     <main class="content">
       <slot />
     </main>
-    <Footer />
     <span id="device" class="screen-only"></span>
   </div>
 </template>
 <script>
 import Header from "./Header";
-import Footer from "./Footer";
-
-// import MovieService from "@/services/MovieService"
 
 export default {
   components: {
-    Header,
-    Footer
+    Header
   },
   data() {
     return {
       device: "desktop"
     };
-  },
-  created() {
-    // MovieService.getMovieSearchList("ava").then(response => {
-    //   console.log(response);
-    // });
   },
   mounted() {
     this.setDevice();
@@ -61,8 +51,21 @@ export default {
 <style lang="scss">
 .layout {
   margin: 0 auto;
+  height: 100%;
+  display: block;
+
   .content {
-    min-height: calc(100vh - 300px);
+    min-height: calc(100vh - 100px);
+    height: 100%;
+    display: block;
+  }
+
+  &[data-page="movies"],
+  &[data-page="movie-details"],
+  &[data-page="watchlist"] {
+    .content {
+      padding: 60px 60px 0 60px;
+    }
   }
 }
 </style>

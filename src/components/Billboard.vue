@@ -1,5 +1,10 @@
 <template>
   <div class="billboard">
+    <Modal v-if="video && showModal" @close="closeModal">
+      <template #body>
+        <Player :id="video.id" />
+      </template>
+    </Modal>
     <div class="billboard__inner">
       <div class="billboard__meta col-5">
         <div>
@@ -31,18 +36,13 @@
               View details
             </router-link>
             <div v-if="video">
-              <button
+              <Button
                 id="show-modal"
-                class="billboard__action billboard__action--trailer"
+                class="button--primary billboard__action billboard__action--trailer"
                 @click="openModal"
               >
                 Watch trailer
-              </button>
-              <Modal v-if="showModal" @close="closeModal">
-                <template #body>
-                  <Player :id="video.id" />
-                </template>
-              </Modal>
+              </Button>
             </div>
           </div>
         </div>
@@ -61,10 +61,14 @@
 <script>
 import Modal from "./Modal";
 import Player from "./Player";
+import Button from "./Button";
 import { IMDb as IMDbIcon } from "@/icons";
+
+import MoviePlayerMixin from "@/mixins/MoviePlayerMixin";
 
 export default {
   name: "Billboard",
+  mixins: [MoviePlayerMixin],
   props: {
     movie: {
       type: Object,
@@ -74,55 +78,8 @@ export default {
   components: {
     Modal,
     Player,
+    Button,
     IMDbIcon
-  },
-  data() {
-    return {
-      showModal: false
-    };
-  },
-  computed: {
-    video() {
-      if (
-        this.movie.videos &&
-        this.movie.videos.results &&
-        this.movie.videos.results[0].site === "YouTube" &&
-        this.movie.videos.results[0].type === "Trailer"
-      ) {
-        return {
-          id: this.movie.videos.results[0].key
-        };
-      }
-
-      return null;
-    }
-  },
-  created() {
-    document.addEventListener("keydown", this.onEscape, false);
-    document.addEventListener("click", this.onClickOutside, false);
-
-    this.$once("hook:beforeDestroy", () => {
-      document.removeEventListener("keydown", this.onEscape, false);
-      document.removeEventListener("click", this.onClickOutside, false);
-    });
-  },
-  methods: {
-    onEscape(event) {
-      if (event.keyCode === 27) {
-        this.closeModal();
-      }
-    },
-    onClickOutside(event) {
-      if (event.target.classList.contains("modal__backdrop")) {
-        this.closeModal();
-      }
-    },
-    openModal() {
-      this.showModal = true;
-    },
-    closeModal() {
-      this.showModal = false;
-    }
   }
 };
 </script>
@@ -151,11 +108,11 @@ export default {
   .billboard__meta {
     display: flex;
     align-items: center;
-    padding: 0 60px;
+    padding: 0 0 0 60px;
     z-index: 1070;
 
     .billboard__title {
-      font-size: 56px;
+      font-size: 48px;
       margin-bottom: 12px;
     }
 
@@ -205,13 +162,9 @@ export default {
       background-color: transparent;
 
       &--details {
-        background-color: #525253;
+        background-color: $secondary;
         color: #ffffff;
-        margin-right: 12px;
-      }
-
-      &--trailer {
-        background-color: $primary;
+        margin-right: 8px;
       }
     }
   }

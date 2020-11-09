@@ -3,7 +3,7 @@ const config = {
   BASE_IMAGE_URL: "https://image.tmdb.org/t/p",
   DEFAULT_API_LOCALE: "en-US",
   MAX_REQUESTS_NUMBER: 15,
-  MIN_MOVIE_YEAR: 1888,
+  MIN_MOVIE_YEAR: 1890,
   SORT_BY_FILTERS: {
     POPULARITY: [
       {
@@ -49,15 +49,18 @@ const config = {
   MOVIES_SECTIONS: [
     {
       title: "Latest",
-      filters: [{ name: "sortBy", value: "primary_release_date.desc" }]
+      filters: [{ name: "sortBy", value: "primary_release_date.desc" }],
+      limit: 20
     },
     {
       title: "Trending now",
-      filters: [{ name: "sortBy", value: "popularity.desc" }]
+      filters: [{ name: "sortBy", value: "popularity.desc" }],
+      limit: 10
     },
     {
       title: "Most watched",
-      filters: [{ name: "sortBy", value: "vote_count.desc" }]
+      filters: [{ name: "sortBy", value: "vote_count.desc" }],
+      limit: 20
     },
     {
       title: "Upcoming",
@@ -65,7 +68,8 @@ const config = {
         { name: "sortBy", value: "primary_release_date.asc" },
         { name: "includeUpcoming", value: true },
         { name: "upcomingOnly", value: true }
-      ]
+      ],
+      limit: 20
     }
   ],
   GO_BACK_ROUTES: {
@@ -94,7 +98,9 @@ config.BASE_API_URL_V4 = `${config.BASE_API_URL}/4`;
 
 config.IMAGES_SIZES = {
   backdrop: "w342",
+  backdrop_full: "w1280",
   poster: "w342",
+  poster_full: "w1280",
   profile: "w185",
   default: "orignal"
 };

@@ -1,42 +1,49 @@
 <template>
   <!-- Display the page if we have the billboard movie at least -->
-  <div v-if="billboardMovie">
-    <section class="hero">
-      <Billboard :movie="billboardMovie" />
-    </section>
-    <div class="views">
-      <section v-if="watchlist && watchlist.length" class="my-list">
-        <div class="section__header">
-          <h2 class="section__title">My list</h2>
-          <div class="section__actions">
-            <router-link to="/watchlist">View all</router-link>
-          </div>
-        </div>
-        <div class="section__content">
-          <Slider>
-            <MovieItem
-              v-for="movie in watchlist.slice(0, 20)"
-              :key="movie.id"
-              :movie="movie"
-              type="backdrop"
-            ></MovieItem>
-          </Slider>
-        </div>
+  <div>
+    <div v-show="billboardLoaded && allSectionsLoaded">
+      <section v-if="billboardMovie" class="hero">
+        <Billboard :movie="billboardMovie" />
       </section>
-      <MovieSection
-        v-for="(section, idx) in moviesSections"
-        :key="idx"
-        :section="section"
-      />
+      <div v-if="moviesSections.length" class="views">
+        <section v-if="watchlist && watchlist.length" class="my-list">
+          <div class="section__header">
+            <h2 class="section__title">My list</h2>
+            <div class="section__actions">
+              <router-link to="/watchlist">View all</router-link>
+            </div>
+          </div>
+          <div class="section__content">
+            <Slider>
+              <MovieItem
+                v-for="movie in watchlist.slice(0, 20)"
+                :key="movie.id"
+                :movie="movie"
+                type="backdrop"
+              ></MovieItem>
+            </Slider>
+          </div>
+        </section>
+        <MovieSection
+          v-for="(section, idx) in moviesSections"
+          :key="idx"
+          :section="section"
+          @loadSection="loadSection"
+        />
+      </div>
     </div>
-  </div>
-  <div v-else>
-    Loading...
+    <Loader v-show="!billboardLoaded || !allSectionsLoaded" />
   </div>
 </template>
 
 <script>
-import { Billboard, Slider, MovieItem, MovieSection } from "@/components";
+import {
+  Billboard,
+  Slider,
+  MovieItem,
+  MovieSection,
+  Loader
+} from "@/components";
 import { mapGetters } from "vuex";
 
 import { MOVIES_SECTIONS } from "@/config";
@@ -49,25 +56,41 @@ export default {
     Billboard,
     Slider,
     MovieItem,
-    MovieSection
+    MovieSection,
+    Loader
   },
   data() {
     return {
       billboardMovie: null,
-      moviesSections: MOVIES_SECTIONS
+      billboardLoaded: false,
+      allSectionsLoaded: false,
+      loadedSections: 0,
+      moviesSections: MOVIES_SECTIONS,
+      moviesSectionsCount: MOVIES_SECTIONS.length
     };
   },
   computed: {
     ...mapGetters(["watchlist"])
   },
   created() {
-    MovieService.getMovieDetails(8871)
+    MovieService.getMovieDetails(741074)
       .then(response => {
         this.billboardMovie = response;
       })
       .catch(error => {
         console.error(error);
+      })
+      .finally(() => {
+        this.billboardLoaded = true;
       });
+  },
+  methods: {
+    loadSection(title) {
+      if (this.moviesSections.find(section => section.title === title))
+        this.loadedSections++;
+      if (this.loadedSections === this.moviesSectionsCount)
+        this.allSectionsLoaded = true;
+    }
   }
 };
 </script>
@@ -97,7 +120,7 @@ section {
 .views {
   transform: translateY(-15vh);
   position: relative;
-  z-index: 1000;
+  z-index: 1070;
 
   section {
     min-height: 150px;

@@ -6,32 +6,16 @@
       @updateFilters="getMoviesList"
       @updateSearchedMovies="searchInMoviesList"
     />
-    <div
-      v-for="movie in movies"
-      :key="movie.id"
-      style="display: inline-block; padding-left: 15px; width: 200px;"
-    >
-      <a href="" @click.prevent="goToMovieDetails(movie.id)">
-        <Img
-          :src="getImageSource(movie.poster_path, 'poster')"
-          width="auto"
-          height="200"
-          :alt="movie.title"
-        />
-        <p>{{ movie.title }}</p>
-        <p>{{ movie.release_date }}</p>
-      </a>
-    </div>
-    <button v-if="hasMoreResults" @click="fetchMoreMovies">See more...</button>
+    <MovieList v-if="!isLoading && movies.length" :movies="movies" />
+    <div v-else-if="!isLoading && !movies.length">No movie found...</div>
+    <Loader v-else />
   </div>
 </template>
 
 <script>
-import { MovieFilters } from "@/components";
+import { MovieFilters, MovieList, Loader } from "@/components";
 
 import MovieService from "@/services/MovieService";
-
-import ImageMixin from "@/mixins/ImageMixin";
 import MovieMixin from "@/mixins/MovieMixin";
 
 import { mapGetters } from "vuex";
@@ -39,9 +23,11 @@ import { mapGetters } from "vuex";
 export default {
   name: "Movies",
   components: {
-    MovieFilters
+    MovieFilters,
+    MovieList,
+    Loader
   },
-  mixins: [ImageMixin, MovieMixin],
+  mixins: [MovieMixin],
   data() {
     return {
       currentPage: 1,
@@ -57,6 +43,11 @@ export default {
   },
   created() {
     MovieService.getGenresList().then(response => (this.genres = response));
+
+    window.addEventListener("scroll", this.onScroll);
+    this.$once("hook:beforeDestroy", () => {
+      window.removeEventListener("scroll", this.onScroll);
+    });
   },
   methods: {
     fetchMoreMovies() {
@@ -70,6 +61,7 @@ export default {
         this.searchInMoviesList(this.searchedText, false, 2, this.currentPage);
         return;
       }
+
       this.getMoviesList(
         {
           ...this.filters,
@@ -80,7 +72,7 @@ export default {
       );
     },
     getMoviesList(filters, resetMovies = true) {
-      this.isLoading = true;
+      this.isLoading = !!resetMovies;
       this.isSearchingByText = false;
       // Request to get movies filtered by genres, year, etc.
       MovieService.getMoviesDiscoveryList(filters)
@@ -113,6 +105,14 @@ export default {
       }
       this.currentPage = response.page;
       this.hasMoreResults = response.hasMoreResults;
+    },
+    onScroll() {
+      if (
+        this.hasMoreResults &&
+        window.innerHeight + window.scrollY >= document.body.offsetHeight
+      ) {
+        this.fetchMoreMovies();
+      }
     }
   }
 };

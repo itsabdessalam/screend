@@ -7,7 +7,6 @@
       <ul class="navbar__links">
         <router-link class="navbar__link" to="/">Home</router-link>
         <router-link class="navbar__link" to="/movies">Movies</router-link>
-        <router-link class="navbar__link" to="/latest">Latest</router-link>
         <router-link class="navbar__link" to="/watchlist">My list</router-link>
       </ul>
     </div>
@@ -35,7 +34,7 @@ export default {
   width: 100%;
   height: 100px;
   padding: 0 60px;
-  z-index: 1070;
+  z-index: 1100;
 
   .navbar__links {
     display: flex;

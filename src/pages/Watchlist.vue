@@ -3,43 +3,28 @@
     <h2>My watchlist</h2>
     <div v-if="!isAuthenticated">
       <p>You need to login to access your watchlist.</p>
-      <button @click="login">Login</button>
+      <Button @click="login" class="button--secondary">Login</Button>
     </div>
     <div v-else>
-      <button @click="logout">Log out</button>
-      <div v-for="movie in watchlist" :key="movie.id">
-        <button
-          @click="removeMovieFromWatchlist(sessionId, accountId, movie.id)"
-        >
-          Remove from watchlist
-        </button>
-        <a href="" @click.prevent="goToMovieDetails(movie.id)">
-          <Img
-            :src="getImageSource(movie.poster_path, 'poster')"
-            width="auto"
-            height="300"
-            :alt="movie.title"
-          />
-          <p>{{ movie.title }}</p>
-        </a>
-      </div>
+      <Button @click="logout" class="button--secondary">Log out</Button>
+      <MovieList :movies="watchlist" context="watchlist" />
     </div>
   </div>
 </template>
 
 <script>
-import AuthService from "@/services/AuthService";
-
 import { mapGetters } from "vuex";
-
-import ImageMixin from "@/mixins/ImageMixin";
-import MovieMixin from "@/mixins/MovieMixin";
+import AuthService from "@/services/AuthService";
+import { Button, MovieList } from "@/components";
 
 export default {
   name: "Watchlist",
-  mixins: [ImageMixin, MovieMixin],
   computed: {
     ...mapGetters(["isAuthenticated", "sessionId", "accountId", "watchlist"])
+  },
+  components: {
+    Button,
+    MovieList
   },
   methods: {
     login() {

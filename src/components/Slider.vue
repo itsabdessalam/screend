@@ -53,8 +53,8 @@ export default {
       slider: null,
       scroll: 0,
       scrolled: false,
-      showSlideRight: true,
-      showSlideLeft: true
+      showSlideRight: false,
+      showSlideLeft: false
     };
   },
   mounted() {
@@ -65,11 +65,6 @@ export default {
     init() {
       // selectors should be queried on each update
       this.slider = this.$el.querySelector(".slider__items");
-      const [windowWidth] = getWindowSize();
-
-      if (this.slider.scrollWidth > windowWidth) {
-        this.showSlideRight = true;
-      }
 
       window.addEventListener("resize", this.onResize);
       this.slider.addEventListener("scroll", this.onScroll);
@@ -78,6 +73,11 @@ export default {
         window.removeEventListener("resize", this.onResize);
         this.slider.removeEventListener("scroll", this.onScroll);
       });
+
+      // Trigger resize event to setup slider after all elements are displayed
+      setTimeout(() => {
+        window.dispatchEvent(new Event("resize"));
+      }, 250);
     },
     next() {
       const [slideWidth] = getSize(this.slider.querySelector(".slider__item"));
@@ -169,7 +169,7 @@ export default {
       display: inline-block;
       width: calc(80vw - 60px);
       height: auto;
-      overflow: auto;
+      overflow: hidden;
       cursor: pointer;
       z-index: 950;
 
@@ -185,7 +185,11 @@ export default {
         margin-left: 6px;
       }
 
-      @media (min-width: 768px) {
+      @media (min-width: $phone) {
+        width: 22%;
+      }
+
+      @media (min-width: $lg-desktop) {
         width: 16.66666667%;
       }
     }
@@ -221,14 +225,46 @@ export default {
     .slider__control__button {
       display: flex;
       align-items: center;
+      justify-content: center;
+      width: 70px;
       height: 100%;
       background: transparent;
       outline: none;
       color: #ffffff;
-      padding: 0 22px;
 
       > svg {
         width: 24px;
+      }
+    }
+  }
+
+  &.trending-now {
+    counter-reset: item;
+
+    .slider__items {
+      .slider__item {
+        position: relative;
+        z-index: 1;
+
+        &::before {
+          counter-increment: item;
+          content: counter(item);
+          position: absolute;
+          top: 0;
+          right: 0;
+          color: #ffffff;
+          background-color: #f3bb39;
+          width: 56px;
+          height: 68px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          text-align: center;
+          font-weight: 600;
+          z-index: 100;
+          font-size: 32px;
+          letter-spacing: -3.2px;
+        }
       }
     }
   }

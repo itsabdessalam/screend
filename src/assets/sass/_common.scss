@@ -7,4 +7,17 @@
       object-position: center;
     }
   }
+
+  .slider {
+    .slider__item {
+      &.poster {
+        img {
+          height: 480px;
+          width: 320px;
+
+          object-fit: cover;
+        }
+      }
+    }
+  }
 }
