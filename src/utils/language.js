@@ -738,9 +738,10 @@ const LANGUAGES = {
 };
 
 /**
+ * Returns language name for a given language code
  *
- *
- * @param {*} languageCode
+ * @param {string} languageCode
+ * @returns {string}
  */
 export const getLanguageName = languageCode =>
   languageCode && LANGUAGES[languageCode] ? LANGUAGES[languageCode].name : null;
