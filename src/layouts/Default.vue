@@ -1,16 +1,26 @@
 <template>
   <div
     id="app"
-    class="layout"
+    class="app layout"
     :data-page="$route.name"
     :data-device="device"
     :key="$route.fullPath"
   >
-    <Header />
-    <main class="content">
-      <slot />
-    </main>
-    <span id="device" class="screen-only"></span>
+    <div class="app__view">
+      <Header />
+      <main class="content">
+        <slot />
+      </main>
+      <span id="device" class="screen-only"></span>
+    </div>
+    <div class="app__layer">
+      <span class="app__message">
+        Our website is not available for smartphone.
+      </span>
+      <span class="app__help">
+        Check it out on desktop or tablet.
+      </span>
+    </div>
   </div>
 </template>
 <script>
@@ -65,6 +75,36 @@ export default {
   &[data-page="watchlist"] {
     .content {
       padding: 60px 60px 0 60px;
+    }
+  }
+
+  .app__layer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    .app__message {
+    }
+
+    .app__help {
+    }
+  }
+
+  @media (orientation: portrait) and (max-width: $phone),
+    (orientation: landscape) and (max-width: $tablet) {
+    .app__view {
+      display: none;
+    }
+
+    .app__layer {
+      display: flex;
     }
   }
 }

@@ -6,15 +6,14 @@ export default {
   },
   computed: {
     video() {
-      if (
-        this.movie.videos &&
-        this.movie.videos.results &&
-        this.movie.videos.results[0] &&
-        this.movie.videos.results[0].site === "YouTube" &&
-        this.movie.videos.results[0].type === "Trailer"
-      ) {
+      const { results = [] } = this.movie && this.movie.videos;
+      const trailer = results.find(
+        item => item.site === "YouTube" && item.type === "Trailer"
+      );
+
+      if (trailer) {
         return {
-          id: this.movie.videos.results[0].key
+          id: trailer.key
         };
       }
 
