@@ -1,8 +1,9 @@
 $old-phone: 480px;
 $phone: 768px;
 $tablet: 992px;
-$desktop: 1200px;
-$lg-desktop: 1600px;
+$desktop: 1280px;
+$lg-desktop: 1920px;
+$xl-desktop: 3840px;
 
 $primary: #f3bb39;
 $secondary: #525253;
@@ -12,5 +13,5 @@ $text: #ffffff;
 $subtitle: #898a8b;
 $outline: 3px solid rgba(#151515, 0.6);
 
-$titleFont: "Monument", "Helvetica", "Arial", sans-serif;
-$contentFont: "Manrope", "Helvetica", "Arial", sans-serif;
+$title-font: "Monument", "Helvetica", "Arial", sans-serif;
+$content-font: "Manrope", "Helvetica", "Arial", sans-serif;

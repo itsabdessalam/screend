@@ -5,7 +5,8 @@
     :class="{
       'multiselect--active': isOpen,
       'multiselect--disabled': disabled,
-      'multiselect--above': isAbove
+      'multiselect--above': isAbove,
+      'multiselect--used': isUsed
     }"
     @focus="activate()"
     @blur="searchable ? false : deactivate()"
@@ -313,6 +314,9 @@ export default {
       } else {
         return this.prefferedOpenDirection === "above";
       }
+    },
+    isUsed() {
+      return !this.multiple && this.internalValue && this.internalValue.length;
     }
   }
 };
@@ -433,6 +437,20 @@ fieldset[disabled] .multiselect {
   }
 }
 
+.multiselect--used {
+  &:not(.multiselect--active):not(.multiselect--disabled) {
+    .multiselect__tags {
+      background: $primary;
+
+      .multiselect__input,
+      .multiselect__single {
+        background: $primary;
+        color: #ffffff;
+      }
+    }
+  }
+}
+
 .multiselect__input,
 .multiselect__single {
   font-size: 16px;
@@ -456,14 +474,8 @@ fieldset[disabled] .multiselect {
   }
 }
 
-.multiselect__input:hover,
-.multiselect__single:hover {
-  border-color: #cfcfcf;
-}
-
 .multiselect__input:focus,
 .multiselect__single:focus {
-  border-color: #a8a8a8;
   outline: none;
 }
 
