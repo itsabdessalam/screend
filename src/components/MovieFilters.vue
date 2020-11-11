@@ -198,11 +198,13 @@ export default {
 
   #searchedText {
     background-color: #ffffff;
-    border: 1px solid #dde2ec;
+    border: 1px solid#ffffff;
+    box-shadow: 0 0 0 0#ffffff;
     color: #15161c;
     padding: 12px;
     padding-left: 32px;
     border-radius: 4px;
+    line-height: 24px;
     width: 100%;
     display: block;
     font-size: 16px;
@@ -210,6 +212,11 @@ export default {
     height: 47px;
     -webkit-appearance: none;
     outline: 0;
+
+    &:focus {
+      border-color: $primary;
+      box-shadow: 0 0 0 4px rgba($primary, 0.2);
+    }
   }
 
   #toggle {

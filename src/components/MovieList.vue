@@ -50,7 +50,8 @@ export default {
 .movie__list {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  grid-gap: 6px;
+  column-gap: 6px;
+  row-gap: 12px;
   margin-top: 32px;
   position: relative;
 
@@ -72,6 +73,7 @@ export default {
         overflow: hidden;
         display: block;
         position: relative;
+        margin-bottom: 0;
 
         &:after {
           content: "";

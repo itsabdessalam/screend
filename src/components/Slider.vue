@@ -181,19 +181,12 @@ export default {
       }
 
       &.poster {
-        @media (min-width: $phone) {
-          width: 267px;
-          height: 400px;
-        }
+        width: 320px;
+        height: 480px;
 
-        @media (min-width: $tablet) {
-          width: 320px;
-          height: 480px;
-        }
-
-        @media (min-width: $lg-desktop) {
-          width: 384px;
-          height: 576px;
+        @media (min-width: calc($lg-desktop + 1px)) {
+          width: 460px;
+          height: 692px;
         }
       }
     }
