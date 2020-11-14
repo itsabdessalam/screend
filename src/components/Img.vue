@@ -62,8 +62,8 @@ export default {
 .image__wrapper {
   position: relative;
   display: block;
-  width: 100%;
-  height: 100%;
+  width: inherit;
+  height: inherit;
 
   .image__item {
     display: inline-block;

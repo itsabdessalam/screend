@@ -90,10 +90,9 @@ export default {
     justify-content: center;
     flex-direction: column;
 
-    .app__message {
-    }
-
+    .app__message,
     .app__help {
+      text-align: center;
     }
   }
 

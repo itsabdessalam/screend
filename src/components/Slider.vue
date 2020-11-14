@@ -109,11 +109,8 @@ export default {
 
       this.scroll = 0;
       this.scrolled = false;
-      this.showSlideLeft = false;
-
-      if (this.slider.scrollWidth > windowWidth) {
-        this.showSlideRight = true;
-      }
+      this.showSlideLeft = this.slider.scrollLeft <= windowWidth;
+      this.showSlideRight = this.slider.scrollWidth > windowWidth;
 
       this.slider.scrollTo(0, 0);
     },
@@ -162,7 +159,6 @@ export default {
     .slider__item {
       position: relative;
       display: inline-block;
-      width: calc(80vw - 60px);
       height: auto;
       overflow: hidden;
       cursor: pointer;
