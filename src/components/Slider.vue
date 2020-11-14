@@ -6,7 +6,6 @@
     >
       <button class="slider__control__button" @click="previous">
         <svg
-          class="w-6 h-6"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -25,7 +24,6 @@
     <div class="slider__control slider__control--right" v-show="showSlideRight">
       <button class="slider__control__button" @click="next">
         <svg
-          class="w-6 h-6"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -98,7 +96,7 @@ export default {
       this.scrolled = true;
       this.showSlideRight = true;
 
-      if (this.slider.scrollLeft <= windowWidth) {
+      if (this.slider.scrollLeft === windowWidth) {
         this.showSlideLeft = false;
       }
 
@@ -109,7 +107,7 @@ export default {
 
       this.scroll = 0;
       this.scrolled = false;
-      this.showSlideLeft = this.slider.scrollLeft <= windowWidth;
+      this.showSlideLeft = this.slider.scrollLeft === windowWidth;
       this.showSlideRight = this.slider.scrollWidth > windowWidth;
 
       this.slider.scrollTo(0, 0);
@@ -121,7 +119,7 @@ export default {
       this.showSlideLeft = true;
       this.showSlideRight = true;
 
-      if (this.slider.scrollLeft <= 100) {
+      if (this.slider.scrollLeft <= 60) {
         this.showSlideLeft = false;
       }
 

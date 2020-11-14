@@ -49,7 +49,6 @@
       </div>
       <div class="movie__filter movie__search">
         <svg
-          class="w-6 h-6"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
