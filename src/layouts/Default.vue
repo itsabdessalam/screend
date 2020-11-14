@@ -96,7 +96,7 @@ export default {
     }
   }
 
-  @media (orientation: portrait) and (max-width: $phone),
+  @media (orientation: portrait) and (max-width: $tablet),
     (orientation: landscape) and (max-width: $tablet) {
     .app__view {
       display: none;
