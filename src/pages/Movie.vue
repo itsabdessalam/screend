@@ -281,7 +281,7 @@ export default {
     top: 0;
     left: 0;
     width: 100vw;
-    height: 90vh;
+    height: 70vh;
     transform: scale(1.5);
     filter: blur(13px) opacity(0.2);
 
