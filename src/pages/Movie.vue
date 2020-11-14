@@ -28,6 +28,7 @@
           class="movie__thumbnail"
           type="backdrop_full"
         />
+        <div class="movie__backdrop__overlay"></div>
       </div>
       <div class="movie__overview">
         <div
@@ -283,6 +284,22 @@ export default {
     height: 90vh;
     transform: scale(1.5);
     filter: blur(13px) opacity(0.2);
+
+    .movie__backdrop__overlay {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      display: block;
+      background-image: linear-gradient(
+        0,
+        #000 0,
+        transparent 50%,
+        transparent
+      );
+      z-index: 100;
+    }
   }
 
   .movie__cast {
