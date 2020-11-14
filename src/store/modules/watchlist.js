@@ -26,7 +26,6 @@ const actions = {
     });
   },
   removeFromWatchlist({ commit }, { sessionId, accountId, movieId }) {
-    console.log(sessionId, accountId, movieId);
     WatchlistService.removeMovieFromWatchlist(
       sessionId,
       accountId,
@@ -44,7 +43,6 @@ const mutations = {
   },
   REMOVE_FROM_WATCHLIST: (state, movieId) => {
     const idx = state.watchlist.findIndex(movie => movie.id === movieId);
-    console.log(idx);
     if (idx > -1) {
       state.watchlist.splice(idx, 1);
     }

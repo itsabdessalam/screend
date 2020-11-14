@@ -7,109 +7,109 @@
           <Player :id="video.id" />
         </template>
       </Modal>
-      <!-- TODO: add full backdrop with blur effect -->
-      <!-- <div class="movie__backdrop">
+      <div v-if="movie.backdrop_path" class="movie__backdrop">
         <Img
-          :src="getImageSource(movie.backdrop_path, 'backdrop_full')"
-          width="auto"
-          height="300"
+          :src="movie.backdrop_path"
           :alt="movie.title"
+          class="movie__thumbnail"
+          type="backdrop_full"
         />
-      </div> -->
-      <div>
-        <div class="movie__overview">
-          <div
-            :class="
-              `movie__poster  movie__overview__section movie__overview__section--left ${
-                movie.vote_average ? 'movie__poster--rated' : ''
-              } `
-            "
-          >
-            <Img :src="movie.poster_path" :alt="movie.title" type="poster" />
-            <span class="movie__rate" v-if="movie.vote_average">
-              <IMDbIcon />
-              <span>{{ movie.vote_average }}</span>
-            </span>
-          </div>
-          <div
-            class="movie__meta  movie__overview__section movie__overview__section--right"
-          >
-            <h2 class="movie__title">{{ movie.title }}</h2>
-            <p class="movie__summary">{{ movie.overview }}</p>
+      </div>
+      <div class="movie__overview">
+        <div
+          :class="
+            `movie__poster  movie__overview__section movie__overview__section--left ${
+              movie.vote_average ? 'movie__poster--rated' : ''
+            } `
+          "
+        >
+          <Img :src="movie.poster_path" :alt="movie.title" type="poster" />
+          <span class="movie__rate" v-if="movie.vote_average">
+            <IMDbIcon />
+            <span>{{ movie.vote_average }}</span>
+          </span>
+        </div>
+        <div
+          class="movie__meta  movie__overview__section movie__overview__section--right"
+        >
+          <h2 class="movie__title">{{ movie.title }}</h2>
+          <p class="movie__summary">{{ movie.overview }}</p>
 
-            <ul class="movie__details">
-              <li v-if="movie.release_date" class="movie__details__item">
-                <span class="label">Release date</span>
-                <span class="value">{{
-                  movie.release_date | toLocaleDate
-                }}</span>
-              </li>
-              <li v-if="movie.status" class="movie__details__item">
-                <span class="label">Status</span>
-                <span class="value">{{ movie.status }}</span>
-              </li>
-              <li v-if="movie.runtime" class="movie__details__item">
-                <span class="label">Duration</span>
-                <span class="value">{{
-                  convertMovieRuntime(movie.runtime)
-                }}</span>
-              </li>
-              <li v-if="movie.genres.length" class="movie__details__item">
-                <span class="label">Genres</span>
-                <span class="value">{{
-                  movie.genres.map(genre => genre.name).join(", ")
-                }}</span>
-              </li>
-              <li
-                v-if="movie.production_companies.length"
-                class="movie__details__item"
+          <ul class="movie__details">
+            <li v-if="movie.release_date" class="movie__details__item">
+              <span class="label">Release date</span>
+              <span class="value">{{ movie.release_date | toLocaleDate }}</span>
+            </li>
+            <li v-if="movie.status" class="movie__details__item">
+              <span class="label">Status</span>
+              <span class="value">{{ movie.status }}</span>
+            </li>
+            <li v-if="movie.runtime" class="movie__details__item">
+              <span class="label">Duration</span>
+              <span class="value">{{
+                convertMovieRuntime(movie.runtime)
+              }}</span>
+            </li>
+            <li v-if="movie.genres.length" class="movie__details__item">
+              <span class="label">Genres</span>
+              <span class="value">{{
+                movie.genres.map(genre => genre.name).join(", ")
+              }}</span>
+            </li>
+            <li
+              v-if="movie.production_companies.length"
+              class="movie__details__item"
+            >
+              <span class="label">Production</span>
+              <span class="value">{{
+                movie.production_companies
+                  .map(production => production.name)
+                  .join(", ")
+              }}</span>
+            </li>
+            <li v-if="movie.original_language" class="movie__details__item">
+              <span class="label">Language</span>
+              <span class="value">{{
+                movie.original_language | toLanguageName
+              }}</span>
+            </li>
+            <li v-if="movie.vote_count" class="movie__details__item">
+              <span class="label">Reviews</span>
+              <span class="value">{{ movie.vote_count }}</span>
+            </li>
+          </ul>
+          <div class="movie__actions">
+            <div v-if="isAuthenticated">
+              <Button
+                v-if="isInWatchlist"
+                @click="
+                  removeMovieFromWatchlist(sessionId, accountId, movie.id)
+                "
+                class="button--secondary movie__action movie__action--remove"
               >
-                <span class="label">Production</span>
-                <span class="value">{{
-                  movie.production_companies
-                    .map(production => production.name)
-                    .join(", ")
-                }}</span>
-              </li>
-              <li v-if="movie.original_language" class="movie__details__item">
-                <span class="label">Language</span>
-                <span class="value">{{
-                  movie.original_language | toLanguageName
-                }}</span>
-              </li>
-            </ul>
-            <div class="movie__actions">
-              <div v-if="isAuthenticated">
-                <Button
-                  v-if="isInWatchlist"
-                  @click="
-                    removeMovieFromWatchlist(sessionId, accountId, movie.id)
-                  "
-                  class="button--secondary movie__action movie__action--remove"
-                >
-                  Remove from watchlist
-                </Button>
-                <Button
-                  v-else
-                  @click="addToWatchlist(sessionId, accountId, movie)"
-                  class="button--secondary movie__action movie__action--add"
-                >
-                  Add to watchlist
-                </Button>
-              </div>
-              <div v-if="video">
-                <Button
-                  id="show-modal"
-                  @click="openModal"
-                  class="button--primary movie__action movie__action--trailer"
-                >
-                  Watch trailer
-                </Button>
-              </div>
+                Remove from watchlist
+              </Button>
+              <Button
+                v-else
+                @click="addToWatchlist(sessionId, accountId, movie)"
+                class="button--secondary movie__action movie__action--add"
+              >
+                Add to watchlist
+              </Button>
+            </div>
+            <div v-if="video">
+              <Button
+                id="show-modal"
+                @click="openModal"
+                class="button--primary movie__action movie__action--trailer"
+              >
+                Watch trailer
+              </Button>
             </div>
           </div>
         </div>
       </div>
+
       <div class="movie__cast">
         <h4>Cast</h4>
         <div v-if="cast.length" class="movie__cast__list">
@@ -241,8 +241,22 @@ export default {
 
 <style lang="scss" scoped>
 .movie {
+  .movie__backdrop {
+    position: absolute;
+    overflow: hidden;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 70vh;
+    transform: scale(1.5);
+    filter: blur(13px) opacity(0.2);
+  }
+
   .movie__cast {
     margin-top: 60px;
+    position: relative;
+    z-index: 1070;
 
     .movie__cast__list {
       display: grid;
@@ -281,6 +295,8 @@ export default {
     display: flex;
     width: 100%;
     height: 100%;
+    position: relative;
+    z-index: 1070;
 
     .movie__overview__section {
       display: block;
