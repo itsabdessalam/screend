@@ -1,6 +1,20 @@
 <template>
   <div>
-    <!-- <button @click="goBack">Back</button> -->
+    <button @click="goBack" class="goback">
+      <svg
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M10 19l-7-7m0 0l7-7m-7 7h18"
+        ></path></svg
+      >Go back
+    </button>
     <div v-if="!isLoading && !isResponseEmpty" class="movie">
       <Modal v-if="video && showModal" @close="closeModal">
         <template #body>
@@ -223,23 +237,41 @@ export default {
         return;
       }
       this.$router.push("/");
+    },
+    loadMoreReviews() {
+      this.currentReviewPage++;
+      MovieService.getMovieReviews(
+        this.$route.params.id,
+        this.currentReviewPage
+      )
+        .then(response => {
+          this.reviews = this.reviews.concat(response);
+        })
+        .catch(error => console.error(error));
     }
-    // loadMoreReviews() {
-    //   this.currentReviewPage++;
-    //   MovieService.getMovieReviews(
-    //     this.$route.params.id,
-    //     this.currentReviewPage
-    //   )
-    //     .then(response => {
-    //       this.reviews = this.reviews.concat(response);
-    //     })
-    //     .catch(error => console.error(error));
-    // }
   }
 };
 </script>
 
 <style lang="scss" scoped>
+.goback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  font-size: 16px;
+  position: relative;
+  z-index: 1070;
+  background: transparent;
+  border: none;
+  padding: 0;
+  margin-bottom: 24px;
+
+  > svg {
+    width: 14px;
+    margin-right: 8px;
+  }
+}
 .movie {
   .movie__backdrop {
     position: absolute;
