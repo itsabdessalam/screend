@@ -27,6 +27,10 @@
 
 ![Screend movie trailer](./src/assets/images/overview/screend-movie-trailer.jpg)
 
+### Watchlist
+
+![Screend watchlist](./src/assets/images/overview/screend-watchlist.jpg)
+
 Already deployed on Netlify 🎉
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/a9249554-2064-4986-a520-549e8949c49e/deploy-status)](https://screend.playgrnd.dev)
