@@ -3,29 +3,29 @@
 
 ## 🎨 Project branding
 
-![Screend homepage](../screend/src/assets/images/overview/screend-branding.jpg)
+![Screend homepage](./src/assets/images/overview/screend-branding.jpg)
 
 ## 👀 Project overview
 
 ### Homepage
 
-![Screend homepage](../screend/src/assets/images/overview/screend-homepage.jpg)
+![Screend homepage](./src/assets/images/overview/screend-homepage.jpg)
 
 ### Trending slider
 
-![Screend trending slider](../screend/src/assets/images/overview/screend-trending-slider.jpg)
+![Screend trending slider](./src/assets/images/overview/screend-trending-slider.jpg)
 
 ### Movies
 
-![Screend movies](../screend/src/assets/images/overview/screend-movies.jpg)
+![Screend movies](./src/assets/images/overview/screend-movies.jpg)
 
 ### Movie
 
-![Screend movie](../screend/src/assets/images/overview/screend-movie.jpg)
+![Screend movie](./src/assets/images/overview/screend-movie.jpg)
 
 ### Movie trailer
 
-![Screend movie trailer](../screend/src/assets/images/overview/screend-movie-trailer.jpg)
+![Screend movie trailer](./src/assets/images/overview/screend-movie-trailer.jpg)
 
 Already deployed on Netlify 🎉
 
