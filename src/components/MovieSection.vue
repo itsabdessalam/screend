@@ -96,6 +96,7 @@ export default {
 .section__actions {
   a {
     display: flex;
+    align-items: center;
     color: #ffffff;
 
     > svg {
