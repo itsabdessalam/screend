@@ -87,7 +87,7 @@ export default {
     ...mapGetters(["watchlist"])
   },
   created() {
-    MovieService.getMovieDetails(741074)
+    MovieService.getMovieDetails(475430)
       .then(response => {
         this.billboardMovie = response;
       })
